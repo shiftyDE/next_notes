@@ -34,9 +34,14 @@ export default function Home() {
     setNotes(notes.filter(note => note.id !== id));
   };
 
-  const startEdit = (note) => {
+  const startEdit = (note, index) => {
     setEditingId(note.id);
     setEditText(note.text);
+    
+    // Focus the textarea in edit mode after a short delay to allow React render
+    setTimeout(() => {
+      document.querySelector(`[data-note-id="${note.id}"]`)?.querySelector('textarea')?.focus();
+    }, 100);
   };
 
   const saveEdit = () => {
@@ -52,9 +57,14 @@ export default function Home() {
   const cancelEdit = () => {
     setEditingId(null);
     setEditText('');
+    
+    // Return focus to the main textarea after edit is cancelled or saved
+    setTimeout(() => {
+      textareaRef.current?.focus();
+    }, 100);
   };
 
-  // Focus trap helper for modals
+  // Focus trap helper for modals  
   useEffect(() => {
     if (editingId) {
       document.body.style.overflow = 'hidden';
@@ -113,9 +123,9 @@ export default function Home() {
       </div>
 
       {/* Notes List */}
-      <div className="max-w-2xl mx-auto">
-        {notes.map((note) => (
-          <article key={note.id} data-note-id={note.id} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in">
+      <div className="max-w-2xl mx-auto" tabIndex={1}>
+        {notes.map((note, index) => (
+            <article key={note.id} data-note-id={note.id} tabIndex={index + 1} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in">
             {editingId === note.id ? (
               <>
                 <textarea
@@ -125,7 +135,6 @@ export default function Home() {
                   onKeyPress={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                   aria-label="Notiz bearbeiten"
                   className="w-full p-2 mb-3 bg-gray-900 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors duration-200 resize-y h-24 focus-visible:ring-2 focus-visible:ring-purple-500"
-                  tabIndex={1}
                 />
                 <div className="flex justify-end gap-3">
                   <button
