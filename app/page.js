@@ -53,6 +53,7 @@ export default function Home() {
                 onChange={(e) => setNoteText(e.target.value)}
                 className={styles.textarea}
               />
+              <button onClick={saveEdit} className={styles.saveButton}>💾 Save</button>
             </>
           ) : (
             <>
