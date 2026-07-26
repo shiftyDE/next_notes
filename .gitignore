@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-/app/*.css
 /.pnp
 .pnp.*
 .yarn/*
@@ -10,7 +9,7 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-
+/app/style.css
 # testing
 /coverage
 
