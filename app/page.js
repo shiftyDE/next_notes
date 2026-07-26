@@ -88,7 +88,7 @@ export default function Home() {
               </>
             ) : (
               <>
-                <p className="text-gray-300">{note.text}</p>
+                <pre className="text-gray-300 whitespace-pre-wrap">{note.text}</pre>
                 <div className="mt-3 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <button
                     onClick={() => startEdit(note)}
