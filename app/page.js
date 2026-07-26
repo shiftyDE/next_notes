@@ -104,7 +104,6 @@ export default function Home() {
           value={noteText}
           onChange={(e) => setNoteText(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); addNote(); } }}
-          onKeyPress={(e) => { if (e.key === 'Enter') { e.preventDefault(); addNote(); } }}
           placeholder="Schreibe deine Notiz hier..."
           aria-label="Notiz eingeben"
           className="w-full p-4 border border-gray-700 rounded-xl bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors duration-200 resize-y h-32 focus-visible:ring-2 focus-visible:ring-purple-500"
@@ -114,7 +113,6 @@ export default function Home() {
           onClick={addNote}
           aria-label="Notiz hinzufügen"
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); addNote(); } }}
-          onKeyPress={(e) => { if (e.key === 'Enter') { e.preventDefault(); addNote(); } }}
           className="mt-4 w-full py-3 px-6 bg-gradient-to-r from-teal-800 to-blue-900 hover:from-teal-700 hover:to-blue-800 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg focus-visible:ring-2 focus-visible:ring-purple-500 active:scale-[0.98] disabled:opacity-50"
           tabIndex={1}
         >
@@ -123,7 +121,7 @@ export default function Home() {
       </div>
 
       {/* Notes List */}
-      <div className="max-w-2xl mx-auto" tabIndex={1}>
+      <nav className="max-w-2xl mx-auto" aria-label="Notizenliste">
         {notes.map((note, index) => (
             <article key={note.id} data-note-id={note.id} tabIndex={index + 1} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in">
             {editingId === note.id ? (
@@ -132,7 +130,6 @@ export default function Home() {
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}
                   onKeyDown={(e) => handleKeyDown(e, 'save')}
-                  onKeyPress={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                   aria-label="Notiz bearbeiten"
                   className="w-full p-2 mb-3 bg-gray-900 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors duration-200 resize-y h-24 focus-visible:ring-2 focus-visible:ring-purple-500"
                 />
@@ -141,8 +138,7 @@ export default function Home() {
                     onClick={() => setEditingId(null)}
                     aria-label="Bearbeiten abbrechen"
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setEditingId(null); } }}
-                    onKeyPress={(e) => { if (e.key === 'Enter') { e.preventDefault(); setEditingId(null); } }}
-                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-purple-500 active:scale-[0.98]"
+                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-purple-500 active:scale-[0.98] opacity-100"
                   >
                     Abbrechen
                   </button>
@@ -150,8 +146,7 @@ export default function Home() {
                     onClick={() => handleKeyDown({ key: 'Enter' }, 'save')}
                     aria-label="Notiz speichern"
                     onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
-                    onKeyPress={(e) => { if (e.key === 'Enter') { e.preventDefault(); saveEdit(); } }}
-                    className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg focus-visible:ring-2 focus-visible:ring-green-500 active:scale-[0.98] disabled:opacity-50"
+                    className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg focus-visible:ring-2 focus-visible:ring-green-500 active:scale-[0.98] disabled:opacity-50 opacity-100"
                   >
                     💾 Speichern
                   </button>
@@ -162,13 +157,12 @@ export default function Home() {
                 <p className="text-gray-300 whitespace-pre-wrap focus:outline-none">{note.text}</p>
                 <p className="mt-1 text-xs text-gray-500" aria-label={`Erstellt am ${new Date(note.timestamp).toLocaleString('de-DE')}`}>🕐 {new Date(note.timestamp).toLocaleString('de-DE')}</p>
                 <p className="text-xs text-teal-400 mt-0.5" aria-label={note.updatedAt ? `Geändert am ${new Date(note.updatedAt).toLocaleString('de-DE')}` : 'Noch nicht bearbeitet'}>{note.updatedAt ? new Date(note.updatedAt).toLocaleString('de-DE') : 'Nicht bearbeitet'}</p>
-                <div className="mt-3 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" role="group">
+                <div className="mt-3 flex justify-end gap-2" role="group">
                   <button
                     onClick={() => startEdit(note)}
                     aria-label="Notiz bearbeiten"
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startEdit(note); } }}
-                    onKeyPress={(e) => { if (e.key === 'Enter') { e.preventDefault(); startEdit(note); } }}
-                    className="px-4 py-2 bg-blue-600/80 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.98]"
+                    className="px-4 py-2 bg-blue-600/80 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.98] opacity-100"
                   >
                     ✏️ Bearbeiten
                   </button>
@@ -176,8 +170,7 @@ export default function Home() {
                     onClick={(e) => deleteNote(note.id, e)}
                     aria-label="Notiz löschen"
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); deleteNote(note.id, e); } }}
-                    onKeyPress={(e) => { if (e.key === 'Enter') { e.preventDefault(); deleteNote(note.id, e); } }}
-                    className="px-4 py-2 bg-red-600/80 hover:bg-red-700 text-white rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-red-500 active:scale-[0.98]"
+                    className="px-4 py-2 bg-red-600/80 hover:bg-red-700 text-white rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-red-500 active:scale-[0.98] opacity-100"
                   >
                     🗑️ Löschen
                   </button>
@@ -194,7 +187,7 @@ export default function Home() {
             <p className="text-gray-500 text-sm">Beginne mit dem Tippen oben, um deine erste Notiz zu erstellen!</p>
           </div>
         )}
-      </div>
+      </nav>
 
       {/* Footer */}
       <footer id="content" className="mt-12 text-center text-gray-600 text-xs" role="contentinfo">
