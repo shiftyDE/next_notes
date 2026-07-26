@@ -74,7 +74,15 @@ export default function Home() {
 
   const handleKeyDown = (e, action) => {
     switch(e.key) {
-      case 'Enter': if(action === 'save') saveEdit(); break;
+      case 'Enter': 
+        // Add new line instead of saving on Enter press
+        if(editText && editText.trim()) {
+          setEditText(editText + '\n');
+        } else {
+          e.preventDefault();
+          saveEdit();
+        }
+        break;
       case 'Escape': cancelEdit(); break;
       default: break;
     }
@@ -143,7 +151,7 @@ export default function Home() {
                     Cancel
                   </button>
                   <button
-                    onClick={() => handleKeyDown({ key: 'Enter' }, 'save')}
+                    onClick={() => saveEdit()}
                     aria-label="Save note"
                     onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                     className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg focus-visible:ring-2 focus-visible:ring-green-500 active:scale-[0.98] disabled:opacity-50 opacity-100"
