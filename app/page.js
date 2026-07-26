@@ -9,7 +9,7 @@ export default function Home() {
 
   const addNote = () => {
     if (noteText.trim()) {
-      setNotes([...notes, { id: Date.now(), text: noteText }]);
+      setNotes([...notes, { id: Date.now(), text: noteText, timestamp: new Date().toISOString() }]);
       setNoteText('');
     }
   };
@@ -89,6 +89,7 @@ export default function Home() {
             ) : (
               <>
                 <pre className="text-gray-300 whitespace-pre-wrap">{note.text}</pre>
+                <p className="mt-1 text-xs text-gray-500">🕐 {new Date(note.timestamp).toLocaleString('de-DE')}</p>
                 <div className="mt-3 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <button
                     onClick={() => startEdit(note)}
