@@ -26,7 +26,7 @@ export default function Home() {
   const saveEdit = () => {
     if (editingId && editText.trim()) {
       setNotes(notes.map(note => 
-        note.id === editingId ? { ...note, text: editText } : note
+        note.id === editingId ? { ...note, text: editText, updatedAt: new Date().toISOString() } : note
       ));
       setEditingId(null);
       setEditText('');
@@ -90,6 +90,7 @@ export default function Home() {
               <>
                 <pre className="text-gray-300 whitespace-pre-wrap">{note.text}</pre>
                 <p className="mt-1 text-xs text-gray-500">🕐 {new Date(note.timestamp).toLocaleString('de-DE')}</p>
+                <p className="text-xs text-teal-400 mt-0.5">✏️ {note.updatedAt ? new Date(note.updatedAt).toLocaleString('de-DE') : 'Nicht bearbeitet'}</p>
                 <div className="mt-3 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <button
                     onClick={() => startEdit(note)}
