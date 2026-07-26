@@ -1,42 +1,42 @@
 # 📝 Note App
 
-Eine elegante Notiz-Anwendung, die es ermöglicht Gedanken schnell zu erfassen, zu bearbeiten und zu organisieren. Die App wurde mit Next.js 16, React 19 und Tailwind CSS v4 entwickelt.
+A sleek note-taking application that lets you quickly capture, edit, and organize your thoughts. Built with Next.js 16, React 19, and Tailwind CSS v4.
 
 ## Features
 
-- **Notizen hinzufügen** — Tippe in das Textfeld und drücke Enter oder klicke auf "✨ Notiz hinzufügen", um neue Einträge zu erstellen
-- **Notizen bearbeiten** — Klicke auf "✏️ Bearbeiten" um den Inhalt einer Notiz direkt im Inline-Editor zu ändern
-- **Notizen löschen** — Entferne unerwünschte Notizen mit einem Klick auf "🗑️ Löschen"
-- **Zeitstempel** — Jede Notiz zeigt automatisch das Erstellungsdatum an
-- **Änderungsprotokoll** — Bei bearbeiteten Notizen wird das Änderungsdatum angezeigt
-- **Leere Zustände** — Zeigt eine freundliche Nachricht, wenn noch keine Notizen existieren
+- **Add Notes** — Type in the text field and press Enter or click "✨ Add Note" to create new entries
+- **Edit Notes** — Click "✏️ Edit" to change the content of a note directly in the inline editor
+- **Delete Notes** — Remove unwanted notes with a single click on "🗑️ Delete"
+- **Timestamps** — Each note automatically displays its creation date
+- **Change Log** — Edited notes show their last update date
+- **Empty States** — Displays a friendly message when no notes exist yet
 
 ## Tech Stack
 
-| Technologie | Version | Zweck |
+| Technology | Version | Purpose |
 |---|---|---|
-| Next.js | 16.2.11 | React-Framework mit SSR/SSG-Unterstützung |
-| React | 19.2.4 | UI-Bibliothek für interaktive Komponenten |
-| Tailwind CSS | ^4.3.3 | Utility-first CSS-Framework |
-| Sass | ^1.69.0 | CSS-Vorverarbeiter für Stylesheets |
+| Next.js | 16.2.11 | React framework with SSR/SSG support |
+| React | 19.2.4 | UI library for interactive components |
+| Tailwind CSS | ^4.3.3 | Utility-first CSS framework |
+| Sass | ^1.69.0 | CSS preprocessor for stylesheets |
 
-## Projektstruktur
+## Project Structure
 
 ```
 app/
-├── layout.js          # Wurzel-Layout-Komponente (HTML-Schale, Meta-Daten)
-├── page.js            # Hauptanwendung mit Notiz-Funktionalität
+├── layout.js          # Root layout component (HTML shell, meta data)
+├── page.js            # Main application with note functionality
 
-public/                # Statisische Assets-Ordner
+public/                # Static assets folder
 ```
 
-## Installation & Entwicklung
+## Installation & Development
 
-### Voraussetzungen
+### Prerequisites
 
-- Node.js 18+ lokal installiert
+- Node.js 18+ installed locally
 
-### Projekt starten
+### Starting the Project
 
 ```bash
 npm install
@@ -44,7 +44,7 @@ npm run tailwind:css
 npm run dev
 ```
 
-Dies startet den Next.js Development Server auf `http://localhost:3000`.
+This starts the Next.js development server on `http://localhost:3000`.
 
 ### Production Build
 
@@ -54,21 +54,21 @@ npm run build
 npm start
 ```
 
-## Funktionsweise
+## How It Works
 
-Die App verwendet React's `useState`-Hook, um drei Zustände in einem einzigen Client-Komponenten-Block zu verwalten:
+The app uses React's `useState` hook to manage three states within a single client component block:
 
-1. **`notes`** — Array mit allen Notizen, jede enthält eine `id`, `text`, `timestamp` und optional ein `updatedAt`-Feld
-2. **`noteText`** — Der aktuelle Textwert, der im Haupt-Textarea eingegeben wird
-3. **`editText`** — Der Textinhalt beim Bearbeiten einer Notiz
+1. **`notes`** — Array containing all notes, each with an `id`, `text`, `timestamp`, and optionally an `updatedAt` field
+2. **`noteText`** — The current text value entered in the main textarea
+3. **`editText`** — The text content when editing a note
 
-Wenn der Benutzer auf "✨ Notiz hinzufügen" klickt oder Enter drückt, wird der Text validiert und eine neue Notiz mit einem einzigartigen ID (basierend auf `Date.now()`) erstellt. Die App fokussiert sich dann automatisch auf die neu erstellte Notiz.
+When the user clicks "✨ Add Note" or presses Enter, the text is validated and a new note with a unique ID (based on `Date.now()`) is created. The app then automatically focuses the newly created note.
 
-Beim Bearbeiten einer Notiz wird der Edit-Modus aktiviert, was den Overflow des Body versteckt und einen Inline-Editor anzeigt. Nach dem Speichern oder Abbrechen kehrt der Fokus zurück zum Haupt-Textarea.
+When editing a note, edit mode is activated which hides the body overflow and reveals an inline editor. After saving or cancelling, focus returns to the main textarea.
 
-## Tailwind CSS Konfiguration
+## Tailwind CSS Configuration
 
-Die App nutzt Tailwind CSS v4 mit einem Custom-Config-Datei (`tailwind.config.ts`):
+The app uses Tailwind CSS v4 with a custom config file (`tailwind.config.ts`):
 
 ```javascript
 module.exports = {
@@ -82,18 +82,24 @@ module.exports = {
 }
 ```
 
-- **`content`** — Scanpfade für Tailwind-Klasse-Namen in JavaScript/TypeScript-Dateien
-- **`darkMode: 'class'`** — Aktiviert class-basiertes Dark Mode-System (siehe `layout.js`)
-- **`theme.extend`** — Leere Erweiterung für benutzerdefinierte Theme-Werte
+- **`content`** — Scan paths for Tailwind class names in JavaScript/TypeScript files
+- **`darkMode: 'class'`** — Enables class-based dark mode system (see `layout.js`)
+- **`theme.extend`** — Empty extension for custom theme values
 
 ## Accessibility
 
-Die App ist mit ARIA-Attributen und semantischen HTML-Elementen gestaltet:
-- Skip-Navigation Link für Screenreader
-- Role-Attribute für Header, Main, Footer
-- Keyboard-navigierbar über Tab-Befehl
-- Focus-Management beim Bearbeiten von Notizen
+The app is designed with ARIA attributes and semantic HTML elements:
+- Skip navigation link for screen readers
+- Role attributes for Header, Main, Footer
+- Keyboard navigable via Tab key
+- Focus management when editing notes
 
-## Lizenz
+## License
 
-MIT License – Diese App wurde vollständig mit KI-generiertem Code erstellt.
+MIT License – This app was entirely created with AI-generated code.
+
+---
+
+## Important Note
+
+All content in this README, including the project description, features, technical details, and code structure, has been fully generated by artificial intelligence. No human authorship or original creative input was involved in any part of this documentation.
