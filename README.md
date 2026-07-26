@@ -1,69 +1,99 @@
 # 📝 Note App
 
-A simple, lightweight notes application built with Next.js 16 and React 19. This entire project was created using AI-generated code, showcasing how artificial intelligence can rapidly prototype functional web applications.
+Eine elegante Notiz-Anwendung, die es ermöglicht Gedanken schnell zu erfassen, zu bearbeiten und zu organisieren. Die App wurde mit Next.js 16, React 19 und Tailwind CSS v4 entwickelt.
 
 ## Features
 
-- **Add Notes** — Type in the textarea and click "Add Note" to create new entries
-- **Edit Notes** — Click "✏️ Edit" on any note to modify its content inline
-- **Delete Notes** — Remove unwanted notes with a single click using "🗑️ Delete"
-- **Empty State** — Displays a friendly message when no notes exist yet
+- **Notizen hinzufügen** — Tippe in das Textfeld und drücke Enter oder klicke auf "✨ Notiz hinzufügen", um neue Einträge zu erstellen
+- **Notizen bearbeiten** — Klicke auf "✏️ Bearbeiten" um den Inhalt einer Notiz direkt im Inline-Editor zu ändern
+- **Notizen löschen** — Entferne unerwünschte Notizen mit einem Klick auf "🗑️ Löschen"
+- **Zeitstempel** — Jede Notiz zeigt automatisch das Erstellungsdatum an
+- **Änderungsprotokoll** — Bei bearbeiteten Notizen wird das Änderungsdatum angezeigt
+- **Leere Zustände** — Zeigt eine freundliche Nachricht, wenn noch keine Notizen existieren
 
 ## Tech Stack
 
-| Technology | Version | Purpose |
+| Technologie | Version | Zweck |
 |---|---|---|
-| Next.js | 16.2.11 | React framework with SSR/SSG support |
-| React | 19.2.4 | UI library for building interactive components |
-| React DOM | 19.2.4 | Core ReactDOM package |
-| Sass | ^1.69.0 | CSS preprocessor for stylesheets |
+| Next.js | 16.2.11 | React-Framework mit SSR/SSG-Unterstützung |
+| React | 19.2.4 | UI-Bibliothek für interaktive Komponenten |
+| Tailwind CSS | ^4.3.3 | Utility-first CSS-Framework |
+| Sass | ^1.69.0 | CSS-Vorverarbeiter für Stylesheets |
 
-## Project Structure
+## Projektstruktur
 
 ```
 app/
-├── layout.js          # Root layout component (HTML shell, title metadata)
-├── page.js            # Main client-side notes application
-├── page.module.css    # Client-side styling modules
-└── globals.scss       # Global stylesheet (background color: #f5f5f5)
+├── layout.js          # Wurzel-Layout-Komponente (HTML-Schale, Meta-Daten)
+├── page.js            # Hauptanwendung mit Notiz-Funktionalität
 
-public/                # Static assets folder
+public/                # Statisische Assets-Ordner
 ```
 
-## Getting Started
+## Installation & Entwicklung
 
-### Prerequisites
+### Voraussetzungen
 
-- Node.js 18+ installed locally
+- Node.js 18+ lokal installiert
 
-### Installation & Development
+### Projekt starten
 
 ```bash
 npm install
+npm run tailwind:css
 npm run dev
 ```
 
-This starts the Next.js development server at `http://localhost:3000`.
+Dies startet den Next.js Development Server auf `http://localhost:3000`.
 
-### Build for Production
+### Production Build
 
 ```bash
+npm run tailwind:css
 npm run build
 npm start
 ```
 
-## How It Works
+## Funktionsweise
 
-The app uses React's `useState` hook to manage three pieces of state in a single client component (`"use client"`):
+Die App verwendet React's `useState`-Hook, um drei Zustände in einem einzigen Client-Komponenten-Block zu verwalten:
 
-1. **`notes`** — Array storing all note objects, each with an `id` and `text` property
-2. **`noteText`** — The current text value being typed in the main textarea
-3. **`editingId`** — Tracks which note (if any) is currently in edit mode
+1. **`notes`** — Array mit allen Notizen, jede enthält eine `id`, `text`, `timestamp` und optional ein `updatedAt`-Feld
+2. **`noteText`** — Der aktuelle Textwert, der im Haupt-Textarea eingegeben wird
+3. **`editText`** — Der Textinhalt beim Bearbeiten einer Notiz
 
-When a user types in the textarea and clicks "Add Note", the app checks if the text has content (`trim()`), generates a unique ID using `Date.now()`, and pushes the new note into the array. The textarea is then reset for the next entry.
+Wenn der Benutzer auf "✨ Notiz hinzufügen" klickt oder Enter drückt, wird der Text validiert und eine neue Notiz mit einem einzigartigen ID (basierend auf `Date.now()`) erstellt. Die App fokussiert sich dann automatisch auf die neu erstellte Notiz.
 
-During editing, clicking "✏️ Edit" sets the `editingId` to that note's id and populates the textarea with its current text. To save changes, the app maps over the notes array and replaces only the note matching the `editingId`, keeping all other notes untouched. This preserves immutability best practices.
+Beim Bearbeiten einer Notiz wird der Edit-Modus aktiviert, was den Overflow des Body versteckt und einen Inline-Editor anzeigt. Nach dem Speichern oder Abbrechen kehrt der Fokus zurück zum Haupt-Textarea.
 
-## AI-Generated Project
+## Tailwind CSS Konfiguration
 
-This entire project was created using artificial intelligence. It demonstrates how modern LLMs can generate complete, functional web applications from scratch — including proper component structure, state management, and styling — without human intervention in the initial coding phase.
+Die App nutzt Tailwind CSS v4 mit einem Custom-Config-Datei (`tailwind.config.ts`):
+
+```javascript
+module.exports = {
+  content: [
+    './app/**/*.{js,jsx,ts,tsx}',
+    './components/**/*.{js,jsx,ts,tsx}',
+  ],
+  darkMode: 'class',
+  theme: { extend: {} },
+  plugins: [],
+}
+```
+
+- **`content`** — Scanpfade für Tailwind-Klasse-Namen in JavaScript/TypeScript-Dateien
+- **`darkMode: 'class'`** — Aktiviert class-basiertes Dark Mode-System (siehe `layout.js`)
+- **`theme.extend`** — Leere Erweiterung für benutzerdefinierte Theme-Werte
+
+## Accessibility
+
+Die App ist mit ARIA-Attributen und semantischen HTML-Elementen gestaltet:
+- Skip-Navigation Link für Screenreader
+- Role-Attribute für Header, Main, Footer
+- Keyboard-navigierbar über Tab-Befehl
+- Focus-Management beim Bearbeiten von Notizen
+
+## Lizenz
+
+MIT License – Diese App wurde vollständig mit KI-generiertem Code erstellt.
