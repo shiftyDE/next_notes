@@ -1,45 +1,45 @@
 import './style.css'
 
 export const metadata = {
-  title: 'Note App – Organisiere deine Notizen',
-  description: 'Eine elegante Note-App zum Erfassen, Bearbeiten und Organisieren deiner Gedanken. Schnell, übersichtlich und immer dabei.',
-  keywords: ['Notizapp', 'Notes', 'Notizen', 'Gedanken', 'Memo', 'Todo'],
+  title: 'Note App – Organize Your Notes',
+  description: 'An elegant note app for capturing, editing, and organizing your thoughts. Fast, clean, and always with you.',
+  keywords: ['Note App', 'Notes', 'Notes', 'Thoughts', 'Memo', 'Todo'],
   robots: 'index,follow',
   openGraph: {
-    title: 'Note App – Organisiere deine Notizen',
-    description: 'Eine elegante Note-App zum Erfassen, Bearbeiten und Organisieren deiner Gedanken. Schnell, übersichtlich und immer dabei.',
+    title: 'Note App – Organize Your Notes',
+    description: 'An elegant note app for capturing, editing, and organizing your thoughts. Fast, clean, and always with you.',
     type: 'website',
     url: 'https://notes.app',
     siteName: 'Note App',
-    locale: 'de_DE',
+    locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Note App – Organisiere deine Notizen',
-    description: 'Eine elegante Note-App zum Erfassen, Bearbeiten und Organisieren deiner Gedanken.',
+    title: 'Note App – Organize Your Notes',
+    description: 'An elegant note app for capturing, editing, and organizing your thoughts.',
     site: '@nextnotesapp',
   },
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="de" className="dark">
+    <html lang="en" className="dark">
       <head>
         {/* Canonical URL */}
         <link rel="canonical" href="https://notes.app/" />
         
         {/* Open Graph Tags */}
-        <meta property="og:title" content="Note App – Organisiere deine Notizen" />
-        <meta property="og:description" content="Eine elegante Note-App zum Erfassen, Bearbeiten und Organisieren deiner Gedanken." />
+        <meta property="og:title" content="Note App – Organize Your Notes" />
+        <meta property="og:description" content="An elegant note app for capturing, editing, and organizing your thoughts." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://notes.app/" />
         <meta property="og:site_name" content="Note App" />
-        <meta property="og:locale" content="de_DE" />
+        <meta property="og:locale" content="en_US" />
         
         {/* Twitter Card Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Note App – Organisiere deine Notizen" />
-        <meta name="twitter:description" content="Eine elegante Note-App zum Erfassen, Bearbeiten und Organisieren deiner Gedanken." />
+        <meta name="twitter:title" content="Note App – Organize Your Notes" />
+        <meta name="twitter:description" content="An elegant note app for capturing, editing, and organizing your thoughts." />
         
         {/* Structured Data (JSON-LD) */}
         <script type="application/ld+json">
@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
             "@context": "https://schema.org",
             "@type": "WebApplication",
             "name": "Note App",
-            "description": "Eine elegante Note-App zum Erfassen, Bearbeiten und Organisieren deiner Gedanken.",
+            "description": "An elegant note app for capturing, editing, and organizing your thoughts.",
             "url": "https://notes.app/",
             "applicationCategory": "UtilityApplication",
             "operatingSystem": "CrossPlatform",
