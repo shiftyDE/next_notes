@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/app/globals.css
+/app/*.css
 /.pnp
 .pnp.*
 .yarn/*
