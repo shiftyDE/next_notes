@@ -38,7 +38,7 @@ export default function Home() {
       {/* Header */}
       <header className="mb-8 animate-fade-in-down">
         <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
-          <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">📝</span>
+          <span className="text-gray-400">📝</span>
           Notes
         </h1>
         <p className="text-gray-400 text-sm">Capture your thoughts in style</p>
@@ -54,7 +54,7 @@ export default function Home() {
         />
         <button
           onClick={addNote}
-          className="mt-4 w-full py-3 px-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-purple-500/25"
+          className="mt-4 w-full py-3 px-6 bg-gradient-to-r from-teal-800 to-blue-900 hover:from-teal-700 hover:to-blue-800 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg"
         >
           ✨ Add Note
         </button>
