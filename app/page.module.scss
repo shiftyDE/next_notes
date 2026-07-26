@@ -1,0 +1,134 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.noteTitle h1 {
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  resize: vertical;
+  margin-bottom: 1rem;
+
+  &:focus {
+    outline: none;
+    border-color: #4CAF50;
+  }
+}
+
+.addButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.noteCard {
+  background-color: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .noteText {
+    word-break: break-word;
+    font-size: 1.1rem;
+  }
+
+  .actions {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+
+    .editButton,
+    .deleteButton {
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .editButton {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    .deleteButton {
+      background-color: #f44336;
+      color: white;
+    }
+  }
+}
+
+.emptyMessage {
+  text-align: center;
+  color: #757575;
+  font-size: 1.2rem;
+  padding: 2rem;
+}
+
+// Dark theme variants — applied when the system prefers dark mode
+@media (prefers-color-scheme: dark) {
+  .noteTitle h1 {
+    color: #ededed;
+  }
+
+  textarea {
+    border-color: #333;
+
+    &:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+  }
+
+  .addButton {
+    background-color: #66bb6a;
+    color: white;
+
+    &:hover {
+      background-color: #45a049;
+    }
+  }
+
+  .noteCard {
+    background-color: #1e1e1e;
+    border-color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+    .noteText {
+      color: #ededed;
+    }
+
+    .actions {
+      .editButton {
+        background-color: #1e88e5;
+      }
+
+      .deleteButton {
+        background-color: #d32f2f;
+      }
+    }
+  }
+
+  .emptyMessage {
+    color: #999;
+  }
+}
