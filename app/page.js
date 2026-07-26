@@ -5,6 +5,7 @@ import { useState } from 'react';
 export default function Home() {
   const [notes, setNotes] = useState([]);
   const [noteText, setNoteText] = useState('');
+  const [editText, setEditText] = useState('');
   const [editingId, setEditingId] = useState(null);
 
   const addNote = () => {
@@ -20,16 +21,16 @@ export default function Home() {
 
   const startEdit = (note) => {
     setEditingId(note.id);
-    setNoteText(note.text);
+    setEditText(note.text);
   };
 
   const saveEdit = () => {
-    if (editingId && noteText.trim()) {
+    if (editingId && editText.trim()) {
       setNotes(notes.map(note => 
-        note.id === editingId ? { ...note, text: noteText } : note
+        note.id === editingId ? { ...note, text: editText } : note
       ));
       setEditingId(null);
-      setNoteText('');
+      setEditText('');
     }
   };
 
@@ -49,8 +50,8 @@ export default function Home() {
           {editingId === note.id ? (
             <>
               <textarea
-                value={noteText}
-                onChange={(e) => setNoteText(e.target.value)}
+                value={editText}
+                onChange={(e) => setEditText(e.target.value)}
                 className={styles.textarea}
               />
               <button onClick={saveEdit} className={styles.saveButton}>💾 Save</button>
