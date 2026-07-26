@@ -1,5 +1,4 @@
 "use client";
-import styles from './page.module.css';
 import { useState } from 'react';
 
 export default function Home() {
@@ -35,42 +34,93 @@ export default function Home() {
   };
 
   return (
-    <div className={styles.container}>
-      <h1>📝 Notes</h1>
-      <textarea
-        value={noteText}
-        onChange={(e) => setNoteText(e.target.value)}
-        placeholder="Type your note here..."
-        className={styles.textarea}
-      />
-      <button onClick={addNote} className={styles.addButton}>Add Note</button>
+    <div className="min-h-screen bg-gray-900 dark:bg-gray-900 text-white p-6">
+      {/* Header */}
+      <header className="mb-8 animate-fade-in-down">
+        <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
+          <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">📝</span>
+          Notes
+        </h1>
+        <p className="text-gray-400 text-sm">Capture your thoughts in style</p>
+      </header>
 
-      {notes.map(note => (
-        <div key={note.id} className={styles.noteCard}>
-          {editingId === note.id ? (
-            <>
-              <textarea
-                value={editText}
-                onChange={(e) => setEditText(e.target.value)}
-                className={styles.textarea}
-              />
-              <button onClick={saveEdit} className={styles.saveButton}>💾 Save</button>
-            </>
-          ) : (
-            <>
-              <span className={styles.noteText}>{note.text}</span>
-              <div className={styles.actions}>
-                <button onClick={() => startEdit(note)} className={styles.editButton}>✏️ Edit</button>
-                <button onClick={() => deleteNote(note.id)} className={styles.deleteButton}>🗑️ Delete</button>
-              </div>
-            </>
-          )}
-        </div>
-      ))}
+      {/* Input Area */}
+      <div className="mb-8 max-w-2xl mx-auto">
+        <textarea
+          value={noteText}
+          onChange={(e) => setNoteText(e.target.value)}
+          placeholder="Type your note here..."
+          className="w-full p-4 border border-gray-700 rounded-xl bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors duration-200 resize-y h-32"
+        />
+        <button
+          onClick={addNote}
+          className="mt-4 w-full py-3 px-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-purple-500/25"
+        >
+          ✨ Add Note
+        </button>
+      </div>
 
-      {notes.length === 0 && (
-        <p className={styles.emptyMessage}>No notes yet. Start typing above!</p>
-      )}
+      {/* Notes List */}
+      <div className="max-w-2xl mx-auto">
+        {notes.map((note) => (
+          <div key={note.id} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in">
+            {editingId === note.id ? (
+              <>
+                <textarea
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  className="w-full p-2 mb-3 bg-gray-900 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors duration-200 resize-y h-24"
+                />
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={() => setEditingId(null)}
+                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={saveEdit}
+                    className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-green-500/25"
+                  >
+                    💾 Save
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="text-gray-300">{note.text}</p>
+                <div className="mt-3 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <button
+                    onClick={() => startEdit(note)}
+                    className="px-4 py-2 bg-blue-600/80 hover:bg-blue-700 text-white rounded-lg transition-all duration-200"
+                  >
+                    ✏️ Edit
+                  </button>
+                  <button
+                    onClick={() => deleteNote(note.id)}
+                    className="px-4 py-2 bg-red-600/80 hover:bg-red-700 text-white rounded-lg transition-all duration-200"
+                  >
+                    🗑️ Delete
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        ))}
+
+        {/* Empty State */}
+        {notes.length === 0 && (
+          <div className="text-center py-12 animate-fade-in">
+            <p className="text-gray-400 text-lg mb-3">🌟 Your notes will appear here</p>
+            <p className="text-gray-500 text-sm">Start typing above to create your first note!</p>
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <footer className="mt-12 text-center text-gray-600 text-xs">
+        <p>Built with ✨ Tailwind CSS & React</p>
+      </footer>
     </div>
   );
 }
