@@ -104,9 +104,9 @@ export default function Home() {
        <InputArea noteText={noteText} setNoteText={setNoteText} addNote={addNote} />
 
       {/* Notes List */}
-      <nav className="max-w-2xl mx-auto" aria-label="Notes list">
+      <div className="max-w-2xl mx-auto" aria-label="Notes list">
         {notes.map((note, index) => (
-            <article key={note.id} data-note-id={note.id} role="region" aria-label={`Note ${index + 1}`} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:outline-none outline-none">
+          <article key={note.id} data-note-id={note.id} role="region" aria-label={`Note ${index + 1}`} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:outline-none outline-none">
             {editingId === note.id ? (
               <>
               <label htmlFor={`edit-note-${note.id}`} className="sr-only">Edit note</label>
@@ -185,7 +185,7 @@ export default function Home() {
             <p className="text-gray-400 text-sm">Start typing above to create your first note!</p>
           </div>
         )}
-      </nav>
+      </div>
 
     </div>
   );
