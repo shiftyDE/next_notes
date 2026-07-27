@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "start": "next start",
-    "tailwind:css": "npx @tailwindcss/cli build ./*.scss --output app/style.css"
+    "tailwind:css": "npx @tailwindcss/cli build ./*.scss --output app/style.css",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
