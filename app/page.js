@@ -134,7 +134,9 @@ export default function Home() {
             <article key={note.id} data-note-id={note.id} tabIndex={index + 1} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in">
             {editingId === note.id ? (
               <>
+              <label htmlFor={`edit-note-${note.id}`} className="sr-only">Edit note</label>
                 <textarea
+                  id={`edit-note-${note.id}`}
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}
                   onKeyDown={(e) => handleKeyDown(e, 'save')}
