@@ -115,14 +115,12 @@ export default function Home() {
           placeholder="Write your note here..."
           aria-label="Input note"
           className="w-full p-4 border border-gray-700 rounded-xl bg-gray-800 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors duration-200 resize-y h-32 focus-visible:ring-2 focus-visible:ring-purple-500"
-          tabIndex={1}
         />
         <button
           onClick={addNote}
           aria-label="Add note"
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); addNote(); } }}
           className="mt-4 w-full py-3 px-6 bg-gradient-to-r from-teal-800 to-blue-900 hover:from-teal-700 hover:to-blue-800 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg focus-visible:ring-2 focus-visible:ring-purple-500 active:scale-[0.98] disabled:opacity-50"
-          tabIndex={1}
         >
           ✨ Add Note
         </button>
@@ -131,7 +129,7 @@ export default function Home() {
       {/* Notes List */}
       <nav className="max-w-2xl mx-auto" aria-label="Notes list">
         {notes.map((note, index) => (
-            <article key={note.id} data-note-id={note.id} tabIndex={index + 1} role="region" aria-label={`Note ${index + 1}`} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:outline-none outline-none">
+            <article key={note.id} data-note-id={note.id} role="region" aria-label={`Note ${index + 1}`} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:outline-none outline-none">
             {editingId === note.id ? (
               <>
               <label htmlFor={`edit-note-${note.id}`} className="sr-only">Edit note</label>
