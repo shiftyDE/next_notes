@@ -163,13 +163,17 @@ export default function Home() {
               </>
             ) : (
               <>
-                <p className="text-gray-300 whitespace-pre-wrap focus:outline-none">{note.text}</p>
-                <span aria-hidden="true" className="text-xl">🕐</span>
-                <p className="sr-only">Created on {new Date(note.timestamp).toLocaleString('en-US')}</p>
-                <p className="mt-1 text-xs text-gray-400" aria-label={`Created on ${new Date(note.timestamp).toLocaleString('en-US')}`}>{new Date(note.timestamp).toLocaleString('en-US')}</p>
-                <span aria-hidden="true" className="text-xl">⏱️</span>
-                <p className="sr-only">{note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}</p>
-                <p className="text-xs text-teal-400 mt-0.5" aria-label={note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}>{note.updatedAt ? new Date(note.updatedAt).toLocaleString('en-US') : 'Not edited'}</p>
+                <p className="text-gray-300 whitespace-pre-wrap mb-2 focus:outline-none">{note.text}</p>
+                <div className="flex items-center gap-2 mt-2" role="group">
+                  <span aria-hidden="true" className="text-xl">🕐</span>
+                  <p className="sr-only">Created on {new Date(note.timestamp).toLocaleString('en-US')}</p>
+                  <p className="mt-1 text-xs text-gray-400" aria-label={`Created on ${new Date(note.timestamp).toLocaleString('en-US')}`}>{new Date(note.timestamp).toLocaleString('en-US')}</p>
+                </div>
+                <div className="flex items-center gap-2 mt-2" role="group">
+                  <span aria-hidden="true" className="text-xl">⏱️</span>
+                  <p className="sr-only">{note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}</p>
+                  <p className="text-xs text-teal-400 mt-0.5" aria-label={note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}>{note.updatedAt ? new Date(note.updatedAt).toLocaleString('en-US') : 'Not edited'}</p>
+                </div>
                 <div className="mt-3 flex justify-end gap-2" role="group">
                   <button
                     onClick={() => startEdit(note)}
