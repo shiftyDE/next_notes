@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
         <meta name="twitter:description" content="An elegant note app for capturing, editing, and organizing your thoughts." />
       </head>
       
-      <body className="min-h-screen bg-gray-900 text-white font-sans antialiased transition-colors duration-300">
+      <body className="min-h-screen bg-gray-900 text-white font-sans antialiased transition-colors duration-300 focus-trap-container">
         {/* Background gradient overlay */}
         <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20 -z-10" />
         
@@ -65,6 +65,12 @@ export default function RootLayout({ children }) {
             }
           })}
         </script>
+
+        {/* Footer */}
+        <footer aria-label="Site footer">
+          <h2 className="sr-only">Footer</h2>
+          <p>Built with ✨ Tailwind CSS & React</p>
+        </footer>
       </body>
     </html>
   )

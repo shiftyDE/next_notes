@@ -131,7 +131,7 @@ export default function Home() {
       {/* Notes List */}
       <nav className="max-w-2xl mx-auto" aria-label="Notes list">
         {notes.map((note, index) => (
-            <article key={note.id} data-note-id={note.id} tabIndex={index + 1} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in">
+            <article key={note.id} data-note-id={note.id} tabIndex={index + 1} role="region" aria-label={`Note ${index + 1}`} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:outline-none outline-none">
             {editingId === note.id ? (
               <>
               <label htmlFor={`edit-note-${note.id}`} className="sr-only">Edit note</label>
@@ -158,14 +158,19 @@ export default function Home() {
                     onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                     className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg focus-visible:ring-2 focus-visible:ring-green-500 active:scale-[0.98] disabled:opacity-50 opacity-100"
                   >
-                    💾 Save
+                    <span aria-hidden="true">💾</span>
+                    Save
                   </button>
                 </div>
               </>
             ) : (
               <>
                 <p className="text-gray-300 whitespace-pre-wrap focus:outline-none">{note.text}</p>
-                <p className="mt-1 text-xs text-gray-500" aria-label={`Created on ${new Date(note.timestamp).toLocaleString('en-US')}`}>🕐 {new Date(note.timestamp).toLocaleString('en-US')}</p>
+                <span aria-hidden="true">🕐</span>
+                <p className="sr-only">Created on {new Date(note.timestamp).toLocaleString('en-US')}</p>
+                <p className="mt-1 text-xs text-gray-500" aria-label={`Created on ${new Date(note.timestamp).toLocaleString('en-US')}`}>{new Date(note.timestamp).toLocaleString('en-US')}</p>
+                <span aria-hidden="true">⏱️</span>
+                <p className="sr-only">{note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}</p>
                 <p className="text-xs text-teal-400 mt-0.5" aria-label={note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}>{note.updatedAt ? new Date(note.updatedAt).toLocaleString('en-US') : 'Not edited'}</p>
                 <div className="mt-3 flex justify-end gap-2" role="group">
                   <button
@@ -174,7 +179,8 @@ export default function Home() {
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startEdit(note); } }}
                     className="px-4 py-2 bg-blue-600/80 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.98] opacity-100"
                   >
-                    ✏️ Edit
+                    <span aria-hidden="true">✏️</span>
+                    Edit
                   </button>
                   <button
                     onClick={(e) => deleteNote(note.id, e)}
@@ -182,7 +188,8 @@ export default function Home() {
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); deleteNote(note.id, e); } }}
                     className="px-4 py-2 bg-red-600/80 hover:bg-red-700 text-white rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-red-500 active:scale-[0.98] opacity-100"
                   >
-                    🗑️ Delete
+                    <span aria-hidden="true">🗑️</span>
+                    Delete
                   </button>
                 </div>
               </>
@@ -193,7 +200,9 @@ export default function Home() {
         {/* Empty State */}
         {notes.length === 0 && (
           <div className="text-center py-12 animate-fade-in" role="status">
-            <p className="text-gray-400 text-lg mb-3">🌟 Your notes will appear here</p>
+            <span aria-hidden="true">🌟</span>
+            <p className="sr-only">Stars decorative element</p>
+            <p className="text-gray-400 text-lg mb-3">Your notes will appear here</p>
             <p className="text-gray-500 text-sm">Start typing above to create your first note!</p>
           </div>
         )}
@@ -201,7 +210,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer id="content" className="mt-12 text-center text-gray-600 text-xs" role="contentinfo">
-        <p>Built with ✨ Tailwind CSS & React</p>
+        <h3 aria-label="Footer">Built with ✨ Tailwind CSS & React</h3>
       </footer>
     </div>
   );
