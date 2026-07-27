@@ -69,7 +69,7 @@ export default function RootLayout({ children }) {
         {/* Footer */}
         <footer aria-label="Site footer">
           <div className="max-w-6xl mx-auto py-8 px-4" role="contentinfo">
-            <p className="text-center text-gray-500 text-sm">Built with ✨ Tailwind CSS & React</p>
+            <p className="text-center text-gray-400 text-sm">Built with ✨ Tailwind CSS & React</p>
           </div>
         </footer>
       </body>

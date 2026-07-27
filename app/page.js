@@ -102,7 +102,7 @@ export default function Home() {
           <span className="sr-only">Note</span>
           Notes
         </h1>
-        <p className="text-gray-500 text-sm" role="status">Capture your thoughts</p>
+        <p className="text-gray-400 text-sm" role="status">Capture your thoughts</p>
       </header>
 
       {/* Input Area */}
@@ -166,7 +166,7 @@ export default function Home() {
                 <p className="text-gray-300 whitespace-pre-wrap focus:outline-none">{note.text}</p>
                 <span aria-hidden="true" className="text-xl">🕐</span>
                 <p className="sr-only">Created on {new Date(note.timestamp).toLocaleString('en-US')}</p>
-                <p className="mt-1 text-xs text-gray-500" aria-label={`Created on ${new Date(note.timestamp).toLocaleString('en-US')}`}>{new Date(note.timestamp).toLocaleString('en-US')}</p>
+                <p className="mt-1 text-xs text-gray-400" aria-label={`Created on ${new Date(note.timestamp).toLocaleString('en-US')}`}>{new Date(note.timestamp).toLocaleString('en-US')}</p>
                 <span aria-hidden="true" className="text-xl">⏱️</span>
                 <p className="sr-only">{note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}</p>
                 <p className="text-xs text-teal-400 mt-0.5" aria-label={note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}>{note.updatedAt ? new Date(note.updatedAt).toLocaleString('en-US') : 'Not edited'}</p>
@@ -201,7 +201,7 @@ export default function Home() {
             <span aria-hidden="true">🌟</span>
             <p className="sr-only">Stars decorative element</p>
             <p className="text-gray-400 text-lg mb-3">Your notes will appear here</p>
-            <p className="text-gray-500 text-sm">Start typing above to create your first note!</p>
+            <p className="text-gray-400 text-sm">Start typing above to create your first note!</p>
           </div>
         )}
       </nav>
