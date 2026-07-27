@@ -89,7 +89,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 dark:bg-gray-900 text-white p-6" role="main">
+    <div className="min-h-screen bg-gray-900 dark:bg-gray-900 text-gray-200 p-6" role="main">
       {/* Skip Navigation Link */}
       <a href="#content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-purple-600 focus:text-white focus:p-3 focus:rounded-lg z-50" aria-label="Skip to main content">
         Skip to content
@@ -102,7 +102,7 @@ export default function Home() {
           <span className="sr-only">Note</span>
           Notes
         </h1>
-        <p className="text-gray-400 text-sm" role="status">Capture your thoughts</p>
+        <p className="text-gray-500 text-sm" role="status">Capture your thoughts</p>
       </header>
 
       {/* Input Area */}
@@ -114,7 +114,7 @@ export default function Home() {
           onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); addNote(); } }}
           placeholder="Write your note here..."
           aria-label="Input note"
-          className="w-full p-4 border border-gray-700 rounded-xl bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors duration-200 resize-y h-32 focus-visible:ring-2 focus-visible:ring-purple-500"
+          className="w-full p-4 border border-gray-700 rounded-xl bg-gray-800 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors duration-200 resize-y h-32 focus-visible:ring-2 focus-visible:ring-purple-500"
           tabIndex={1}
         />
         <button
@@ -141,7 +141,7 @@ export default function Home() {
                   onChange={(e) => setEditText(e.target.value)}
                   onKeyDown={(e) => handleKeyDown(e, 'save')}
                   aria-label="Edit note"
-                  className="w-full p-2 mb-3 bg-gray-900 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors duration-200 resize-y h-24 focus-visible:ring-2 focus-visible:ring-purple-500"
+                  className="w-full p-2 mb-3 bg-gray-900 border border-gray-600 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors duration-200 resize-y h-24 focus-visible:ring-2 focus-visible:ring-purple-500"
                 />
                 <div className="flex justify-end gap-3">
                   <button
@@ -166,10 +166,10 @@ export default function Home() {
             ) : (
               <>
                 <p className="text-gray-300 whitespace-pre-wrap focus:outline-none">{note.text}</p>
-                <span aria-hidden="true">🕐</span>
+                <span aria-hidden="true" className="text-xl">🕐</span>
                 <p className="sr-only">Created on {new Date(note.timestamp).toLocaleString('en-US')}</p>
                 <p className="mt-1 text-xs text-gray-500" aria-label={`Created on ${new Date(note.timestamp).toLocaleString('en-US')}`}>{new Date(note.timestamp).toLocaleString('en-US')}</p>
-                <span aria-hidden="true">⏱️</span>
+                <span aria-hidden="true" className="text-xl">⏱️</span>
                 <p className="sr-only">{note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}</p>
                 <p className="text-xs text-teal-400 mt-0.5" aria-label={note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}>{note.updatedAt ? new Date(note.updatedAt).toLocaleString('en-US') : 'Not edited'}</p>
                 <div className="mt-3 flex justify-end gap-2" role="group">
@@ -209,7 +209,7 @@ export default function Home() {
       </nav>
 
       {/* Footer */}
-      <footer id="content" className="mt-12 text-center text-gray-600 text-xs" role="contentinfo">
+      <footer id="content" className="mt-12 text-center text-gray-500 text-xs" role="contentinfo">
         <h3 aria-label="Footer">Built with ✨ Tailwind CSS & React</h3>
       </footer>
     </div>
