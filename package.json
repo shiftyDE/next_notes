@@ -11,6 +11,7 @@
     "lighthouse": "lighthouse http://localhost:3000 --output=html --output=json --output-path=./lighthouse/report"
   },
   "dependencies": {
+    "@prisma/client": "^7.9.1",
     "@tailwindcss/vite": "^4.3.3",
     "cypress": "^15.19.0",
     "next": "16.2.11",
@@ -20,6 +21,7 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "lighthouse": "^13.4.1"
+    "lighthouse": "^13.4.1",
+    "prisma": "^7.9.1"
   }
 }
