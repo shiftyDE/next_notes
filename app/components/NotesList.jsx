@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef } from 'react';
 
-export default function NotesList({ notes, setNotes }) {
+export default function NotesList({ notes, setNotes, username, onLogout }) {
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState('');
   const textareaRef = useRef(null);
@@ -140,6 +140,17 @@ export default function NotesList({ notes, setNotes }) {
           <p className="text-gray-400 text-lg mb-3">Your notes will appear here</p>
           <p className="text-gray-400 text-sm">Start typing above to create your first note!</p>
         </div>
+      )}
+
+      {/* Logout Button */}
+      {username && (
+        <button
+          onClick={onLogout}
+          aria-label="Logout"
+          className="mt-6 w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white rounded-xl transition-all duration-200 shadow-lg focus-visible:ring-2 focus-visible:ring-red-500 active:scale-[0.98]"
+        >
+          <span aria-hidden="true">🚪</span> Logout
+        </button>
       )}
     </div>
   );

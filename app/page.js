@@ -3,12 +3,15 @@ import { useState, useRef, useEffect } from 'react';
 import Header from './components/Header.jsx';
 import InputArea from './components/InputArea.jsx';
 import NotesList from './components/NotesList.jsx';
+import Login from './components/Login.jsx';
 
 export default function Home() {
   const [notes, setNotes] = useState([]);
   const [noteText, setNoteText] = useState('');
   const [editText, setEditText] = useState('');
   const [editingId, setEditingId] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('');
   const textareaRef = useRef(null);
 
   useEffect(() => {
@@ -17,6 +20,11 @@ export default function Home() {
       textareaRef.current.focus();
     }
   }, [notes]);
+
+  const handleLogin = ({ username, password }) => {
+    setUsername(username);
+    setIsAuthenticated(true);
+  };
 
   const addNote = () => {
     if (noteText.trim()) {
@@ -92,20 +100,26 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 dark:bg-gray-900 text-gray-200 p-6" role="main">
+    <div className="min-h-screen bg-gray-950 text-gray-200 p-6" role="main">
       {/* Skip Navigation Link */}
-      <a href="#content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-purple-600 focus:text-white focus:p-3 focus:rounded-lg z-50" aria-label="Skip to main content">
+      <a href="#content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-purple-600 focus:text-white focus:p-3 focus:rounded-lg z-50" aria-label="Skip to content">
         Skip to content
       </a>
 
-      {/* Header Area */}
-      <Header />
+      {!isAuthenticated ? (
+        <Login onLogin={handleLogin} />
+      ) : (
+        <>
+          {/* Header Area */}
+          <Header />
 
-       {/* Input Area */}
-       <InputArea noteText={noteText} setNoteText={setNoteText} addNote={addNote} />
+           {/* Input Area */}
+           <InputArea noteText={noteText} setNoteText={setNoteText} addNote={addNote} />
 
-      {/* Notes List */}
-      <NotesList notes={notes} setNotes={setNotes} />
+          {/* Notes List */}
+          <NotesList notes={notes} setNotes={setNotes} />
+        </>
+      )}
 
     </div>
   );
