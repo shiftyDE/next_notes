@@ -28,6 +28,10 @@ export default function NotesList({ notes, setNotes }) {
     }
   };
 
+  const deleteNote = (noteId) => {
+    setNotes(notes.filter(note => note.id !== noteId));
+  };
+
   const cancelEdit = () => {
     setEditingId(null);
     setEditText('');
@@ -114,9 +118,9 @@ export default function NotesList({ notes, setNotes }) {
                   Edit
                 </button>
                 <button
-                  onClick={(e) => setNotes(notes.filter(note => note.id !== e.target.closest('[aria-label*="Delete note"]').parentElement?.parentElement?.children[0].id))}
+                  onClick={() => deleteNote(note.id)}
                   aria-label="Delete note"
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const btn = e.target; const article = btn.closest('article'); setNotes(notes.filter(note => note.id !== article.getAttribute('data-note-id'))); } }}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); deleteNote(note.id); } }}
                   className="px-4 py-2 bg-red-600/80 hover:bg-red-700 text-white rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-red-500 active:scale-[0.98] opacity-100"
                 >
                   <span aria-hidden="true">🗑️</span>
