@@ -208,10 +208,6 @@ export default function Home() {
         )}
       </nav>
 
-      {/* Footer */}
-      <footer id="content" className="mt-12 text-center text-gray-500 text-xs" role="contentinfo">
-        <h3 aria-label="Footer">Built with ✨ Tailwind CSS & React</h3>
-      </footer>
     </div>
   );
 }
