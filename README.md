@@ -21,14 +21,6 @@ A sleek note-taking application that lets you quickly capture, edit, and organiz
 | Sass | ^1.69.0 | CSS preprocessor for stylesheets |
 | Cypress | ^15.19.0 | End-to-end testing framework |
 
-## Testing with Cypress
-
-The project includes end-to-end testing powered by [Cypress](https://cypress.io/) to ensure UI functionality works as expected.
-
-```bash
-npm run cypress   # Opens the Cypress Test Runner GUI (interactive)
-npx cypress run   # Executes tests in headless mode
-```
 
 ## Project Structure
 
@@ -95,6 +87,23 @@ module.exports = {
 - **`content`** — Scan paths for Tailwind class names in JavaScript/TypeScript files
 - **`darkMode: 'class'`** — Enables class-based dark mode system (see `layout.js`)
 - **`theme.extend`** — Empty extension for custom theme values
+
+## Testing with Cypress
+
+The project includes end-to-end testing powered by [Cypress](https://cypress.io/) to ensure UI functionality works as expected.
+
+```bash
+npm run cypress   # Opens the Cypress Test Runner GUI (interactive)
+npx cypress run   # Executes tests in headless mode
+```
+
+### Lighthouse Report
+
+The app includes a [Lighthouse](https://developers.google.com/web/tools/lighthouse) report for each test run.
+
+```bash
+npm run lighthouse   # Generates a Lighthouse report for each test in lighthouse-report folder
+```
 
 ## Accessibility
 
