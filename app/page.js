@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from 'react';
+import Header from './components/Header.jsx';
 
 export default function Home() {
   const [notes, setNotes] = useState([]);
@@ -95,15 +96,8 @@ export default function Home() {
         Skip to content
       </a>
 
-      {/* Header */}
-      <header className="mb-8 animate-fade-in-down" role="banner">
-        <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
-          <span aria-hidden="true">📝</span>
-          <span className="sr-only">Note</span>
-          Notes
-        </h1>
-        <p className="text-gray-400 text-sm" role="status">Capture your thoughts</p>
-      </header>
+      {/* Header Area */}
+      <Header />
 
       {/* Input Area */}
       <div className="mb-8 max-w-2xl mx-auto">
