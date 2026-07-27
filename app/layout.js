@@ -3,7 +3,7 @@ import './style.css'
 export const metadata = {
   title: 'Note App – Organize Your Notes',
   description: 'An elegant note app for capturing, editing, and organizing your thoughts. Fast, clean, and always with you.',
-  keywords: ['Note App', 'Notes', 'Notes', 'Thoughts', 'Memo', 'Todo'],
+  keywords: ['Note App', 'Notes', 'Thoughts', 'Memo', 'Todo'],
   robots: 'index,follow',
   openGraph: {
     title: 'Note App – Organize Your Notes',
@@ -40,7 +40,14 @@ export default function RootLayout({ children }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Note App – Organize Your Notes" />
         <meta name="twitter:description" content="An elegant note app for capturing, editing, and organizing your thoughts." />
+      </head>
+      
+      <body className="min-h-screen bg-gray-900 text-white font-sans antialiased transition-colors duration-300">
+        {/* Background gradient overlay */}
+        <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20 -z-10" />
         
+        {children}
+
         {/* Structured Data (JSON-LD) */}
         <script type="application/ld+json">
           {JSON.stringify({
@@ -58,13 +65,6 @@ export default function RootLayout({ children }) {
             }
           })}
         </script>
-      </head>
-      
-      <body className="min-h-screen bg-gray-900 text-white font-sans antialiased transition-colors duration-300">
-        {/* Background gradient overlay */}
-        <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20 -z-10" />
-        
-        {children}
       </body>
     </html>
   )
