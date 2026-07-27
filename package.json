@@ -17,5 +17,8 @@
     "react-dom": "19.2.4",
     "sass": "^1.69.0",
     "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "lighthouse": "^13.4.1"
   }
 }
