@@ -19,6 +19,16 @@ A sleek note-taking application that lets you quickly capture, edit, and organiz
 | React | 19.2.4 | UI library for interactive components |
 | Tailwind CSS | ^4.3.3 | Utility-first CSS framework |
 | Sass | ^1.69.0 | CSS preprocessor for stylesheets |
+| Cypress | ^15.19.0 | End-to-end testing framework |
+
+## Testing with Cypress
+
+The project includes end-to-end testing powered by [Cypress](https://cypress.io/) to ensure UI functionality works as expected.
+
+```bash
+npm run cypress   # Opens the Cypress Test Runner GUI (interactive)
+npx cypress run   # Executes tests in headless mode
+```
 
 ## Project Structure
 
