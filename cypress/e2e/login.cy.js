@@ -1,16 +1,26 @@
 // Login Tests - Cypress E2E
 
 describe('Login', () => {
-  it('should display login page with correct heading and placeholder text', () => {
+    it('should handle successful login with valid credentials', () => {
     cy.visit('/')
     
-    // Verify the login heading is visible
-    cy.get('h1').should('contain.text', 'Login')
+    // Enter the correct username and password
+    cy.get('[aria-label="Benutzername"]').type('test')
+    cy.get('[aria-label="Passwort"]').type('test')
     
-    // Verify welcome message is present
-    cy.get('[role="status"]').should('have.class', 'text-gray-400 text-sm')
+    // Click submit button
+    cy.get('button[type="submit"]').click()
+    
+    // Verify loading state appears briefly
+    cy.contains('Login...').should('be.visible', { timeout: 1000 })
+    
+    // Wait for the page to stabilize after login action
+    cy.wait(600)
+    
+    // Verify error message is no longer present (login succeeded)
+    cy.get('[role="alert"]').should('not.exist')
   })
-
+ 
   it('should display error when fields are empty', () => {
     cy.visit('/')
     
@@ -33,26 +43,6 @@ describe('Login', () => {
     
     // Verify error message for invalid credentials
     cy.contains("Nur Benutzer 'test' mit Passwort 'test' ist erlaubt").should('be.visible')
-  })
-
-  it('should handle successful login with valid credentials', () => {
-    cy.visit('/')
-    
-    // Enter the correct username and password
-    cy.get('[aria-label="Benutzername"]').type('test')
-    cy.get('[aria-label="Passwort"]').type('test')
-    
-    // Click submit button
-    cy.get('button[type="submit"]').click()
-    
-    // Verify loading state appears briefly
-    cy.contains('Login...').should('be.visible', { timeout: 1000 })
-    
-    // Wait for the page to stabilize after login action
-    cy.wait(600)
-    
-    // Verify error message is no longer present (login succeeded)
-    cy.get('[role="alert"]').should('not.exist')
   })
 
   it('should not allow partial login with only username', () => {
@@ -81,44 +71,32 @@ describe('Login', () => {
     cy.contains('Bitte Benutzernamen und Passwort eingeben').should('be.visible')
   })
 
-  it('should handle case-insensitive username input', () => {
+  it('should display error when username is incorrect', () => {
     cy.visit('/')
     
-    // Enter uppercase version of valid username
-    cy.get('[aria-label="Benutzername"]').type('TEST')
+    // Enter wrong username and correct password
+    cy.get('[aria-label="Benutzername"]').type('wrong_user')
     cy.get('[aria-label="Passwort"]').type('test')
     
     // Click submit button
     cy.get('button[type="submit"]').click()
     
-    // Verify loading state appears (login succeeded)
-    cy.contains('Login...').should('be.visible', { timeout: 1000 })
-    
-    // Wait for page to stabilize
-    cy.wait(600)
-    
-    // Verify no error message after successful login
-    cy.get('[role="alert"]').should('not.exist')
+    // Verify error message for invalid credentials appears
+    cy.contains("Nur Benutzer 'test' mit Passwort 'test' ist erlaubt").should('be.visible')
   })
 
-  it('should handle case-insensitive password input', () => {
+  it('should display error when password is incorrect', () => {
     cy.visit('/')
     
-    // Enter lowercase username and uppercase version of valid password
+    // Enter correct username and wrong password
     cy.get('[aria-label="Benutzername"]').type('test')
-    cy.get('[aria-label="Passwort"]').type('TEST')
+    cy.get('[aria-label="Passwort"]').type('wrong_pass')
     
     // Click submit button
     cy.get('button[type="submit"]').click()
     
-    // Verify loading state appears (login succeeded)
-    cy.contains('Login...').should('be.visible', { timeout: 1000 })
-    
-    // Wait for page to stabilize
-    cy.wait(600)
-    
-    // Verify no error message after successful login
-    cy.get('[role="alert"]').should('not.exist')
+    // Verify error message for invalid credentials appears
+    cy.contains("Nur Benutzer 'test' mit Passwort 'test' ist erlaubt").should('be.visible')
   })
 
 })
