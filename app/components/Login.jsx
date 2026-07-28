@@ -72,6 +72,7 @@ export default function Login({ onLogin }) {
               aria-label="Benutzername"
               className="w-full p-3 border border-gray-700/50 rounded-xl bg-gray-800/50 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-purple-400 transition-all duration-200 h-12 focus-visible:ring-2 focus-visible:ring-purple-400"
             />
+            <p className="mt-2 text-xs text-gray-500">Benutzername muss mit 'test' übereinstimmen</p>
           </div>
 
           {/* Password Input */}
@@ -87,6 +88,7 @@ export default function Login({ onLogin }) {
               aria-label="Passwort"
               className="w-full p-3 border border-gray-700/50 rounded-xl bg-gray-800/50 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-purple-400 transition-all duration-200 h-12 focus-visible:ring-2 focus-visible:ring-purple-400"
             />
+            <p className="mt-2 text-xs text-gray-500">Passwort muss mit 'test' übereinstimmen</p>
           </div>
 
           {/* Submit Button */}
