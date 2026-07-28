@@ -37,9 +37,9 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4" role="main">
-      <div className="w-full max-w-md animate-fade-in-up">
+      <div className="max-w-2xl mx-auto animate-fade-in-up">
         {/* Header */}
-        <div className="text-center mb-8 animate-fade-in-down">
+        <div className="text-center animate-fade-in-down">
           <h1 className="text-4xl font-bold mb-2 text-gray-100 flex items-center gap-3 justify-center">
             <span aria-hidden="true">🔐</span>
             <span>Login</span>
