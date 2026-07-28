@@ -100,7 +100,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-200 p-6" role="main">
+    <div className="min-h-screen bg-gray-950 text-gray-200" role="main">
       {/* Skip Navigation Link */}
       <a href="#content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-purple-600 focus:text-white focus:p-3 focus:rounded-lg z-50" aria-label="Skip to content">
         Skip to content
