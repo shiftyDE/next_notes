@@ -16,7 +16,7 @@ export default function Login({ onLogin }) {
     e.preventDefault();
     
     if (!username.trim() || !password.trim()) {
-      setError("Bitte Benutzernamen und Passwort eingeben.");
+      setError("Please enter username and password.");
       return;
     }
 
@@ -26,7 +26,7 @@ export default function Login({ onLogin }) {
     
     if (inputUser !== VALID_USER || 
         inputPass !== VALID_PASS) {
-      setError("Ungültige Zugangsdaten. Nur Benutzer 'test' mit Passwort 'test' ist erlaubt.");
+      setError("Invalid credentials. Only user 'test' with password 'test' is allowed.");
       return;
     }
 
@@ -61,34 +61,34 @@ export default function Login({ onLogin }) {
 
           {/* Username Input */}
           <div className="mb-6">
-            <label htmlFor="username" className="sr-only">Benutzername</label>
+            <label htmlFor="username" className="sr-only">Username</label>
             <input
               id="username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') handleSubmit(e); }}
-              placeholder="Benutzername..."
-              aria-label="Benutzername"
+              placeholder="Username..."
+              aria-label="Username"
               className="w-full p-3 border border-gray-700/50 rounded-xl bg-gray-800/50 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-purple-400 transition-all duration-200 h-12 focus-visible:ring-2 focus-visible:ring-purple-400"
             />
-            <p className="mt-1.5 p-2 text-xs text-gray-500">Benutzername muss mit 'test' übereinstimmen</p>
+            <p className="mt-1.5 p-2 text-xs text-gray-500">Username must match 'test'</p>
           </div>
 
           {/* Password Input */}
           <div className="mb-6">
-            <label htmlFor="password" className="sr-only">Passwort</label>
+            <label htmlFor="password" className="sr-only">Password</label>
             <input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') handleSubmit(e); }}
-              placeholder="Passwort..."
-              aria-label="Passwort"
+              placeholder="Password..."
+              aria-label="Password"
               className="w-full p-3 border border-gray-700/50 rounded-xl bg-gray-800/50 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-purple-400 transition-all duration-200 h-12 focus-visible:ring-2 focus-visible:ring-purple-400"
             />
-            <p className="mt-1.5 text-xs text-gray-500">Passwort muss mit 'test' übereinstimmen</p>
+            <p className="mt-1.5 p-2 text-xs text-gray-500">Password must match 'test'</p>
           </div>
 
           {/* Submit Button */}
@@ -96,7 +96,7 @@ export default function Login({ onLogin }) {
             type="submit"
             aria-label="Login"
             disabled={loading}
-            className="w-full py-3 px-6 bg-gradient-to-r from-blue-700 to-purple-800 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg focus-visible:ring-2 focus-visible:ring-purple-400 active:scale-[0.98] disabled:opacity-50"
+            className="mt-4 w-full py-3 px-6 bg-gradient-to-r from-teal-800 to-blue-900 hover:from-teal-700 hover:to-blue-800 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg focus-visible:ring-2 focus-visible:ring-purple-500 active:scale-[0.98] disabled:opacity-50"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">
@@ -107,7 +107,7 @@ export default function Login({ onLogin }) {
                 <span>Login...</span>
               </span>
             ) : (
-              "Anmelden"
+              "Log in"
             )}
           </button>
         </form>
