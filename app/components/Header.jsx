@@ -2,8 +2,8 @@
 
 export default function Header({ username, onLogout }) {
   return (
-    <header className="mb-8 max-w-2xl mx-auto" role="banner">
-      <h1 className="text-4xl font-bold flex gap-3 max-w-4xl mx-auto">
+    <header className="mb-5 py-2 bg-gray-900" role="banner">
+      <h1 className="max-w-2xl mx-auto font-bold flex gap-3">
         <span aria-hidden="true">📝</span>
         <span className="sr-only">Note</span>
         <span>Notes</span>
