@@ -10,17 +10,26 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-  await prisma.user.createMany({
-    data: [
-      {
-        username: "max",
-        password: "test123",
-      },
-      {
-        username: "anna",
-        password: "test456",
-      },
-    ],
+  await prisma.user.upsert({
+    where: {
+      username: "test",
+    },
+    update: {},
+    create: {
+      username: "test",
+      password: "test",
+    },
+  });
+
+  await prisma.user.upsert({
+    where: {
+      username: "anna",
+    },
+    update: {},
+    create: {
+      username: "anna",
+      password: "test456",
+    },
   });
 
   console.log("Dummy-Daten eingefügt");
