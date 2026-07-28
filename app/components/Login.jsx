@@ -20,9 +20,12 @@ export default function Login({ onLogin }) {
       return;
     }
 
-    // Check hardcoded credentials only
-    if (username.trim().toLowerCase() !== VALID_USER.toLowerCase() || 
-        password.toLowerCase() !== VALID_PASS) {
+    // Check hardcoded credentials only - case sensitive comparison for both username and password
+    const inputUser = username.trim();
+    const inputPass = password;
+    
+    if (inputUser !== VALID_USER || 
+        inputPass !== VALID_PASS) {
       setError("Ungültige Zugangsdaten. Nur Benutzer 'test' mit Passwort 'test' ist erlaubt.");
       return;
     }
@@ -37,8 +40,8 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="min-h-screen bg-gray-900 relative flex items-center justify-center overflow-hidden" role="main">
-  {/* Gradient overlay */}
-  <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20 -z-10" />
+      {/* Gradient overlay */}
+      <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20 -z-10" />
       <div className="max-w-2xl mx-auto animate-fade-in-up">
         {/* Header */}
         <div className="text-center animate-fade-in-down z-10">
