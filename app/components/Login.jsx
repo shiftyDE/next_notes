@@ -49,7 +49,6 @@ export default function Login({ onLogin }) {
             <span aria-hidden="true" className="text-4xl">🔐</span>
             <h1 className="text-4xl font-bold text-gray-100">Login</h1>
           </div>
-          <p className="text-gray-400 animate-fade-in-down" role="status">Willkommen zurück</p>
         </div>
 
         {/* Form */}
