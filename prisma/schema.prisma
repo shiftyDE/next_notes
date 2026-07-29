@@ -11,4 +11,18 @@ model User {
   createdAt DateTime @default(now())
   username  String   @unique
   password  String
+
+  notes     Note[]
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title     String
+  content   String
+
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
