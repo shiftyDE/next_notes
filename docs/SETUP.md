@@ -47,6 +47,7 @@ All packages should be listed without errors.
 Start the app in development mode:
 
 ```bash
+npm run tailwind:css
 npm run dev
 ```
 
@@ -93,6 +94,7 @@ If you encounter errors like `Cannot find module 'next'`, ensure that:
 
 If the database file does not appear at `dev.db`:
 
+- Ensure you ran `npm run tailwind:css` successfully
 - Ensure you ran `npm run dev` successfully
 - The SQLite database is created automatically on first use
 - If using a custom path, adjust in `prisma/schema.prisma`
@@ -102,6 +104,7 @@ If the database file does not appear at `dev.db`:
 For production builds:
 
 ```bash
+npm run tailwind:css
 npm run build
 npm start
 ```
