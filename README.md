@@ -43,6 +43,13 @@ prisma/                # Prisma schema, seed files, migrations
 └── seed.ts            # Database seeding script
 
 public/                # Static assets folder
+
+docs/                  # Project documentation and guides
+├── API.md             # API endpoint documentation
+├── ARCHITECTURE.md    # System architecture overview
+├── COMPONENTS.md      # Component reference guide
+├── DATABASE.md        # Database structure and schema details
+└── SETUP.md           # Setup instructions for new developers
 ```
 
 ## Installation & Development
