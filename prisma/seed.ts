@@ -10,34 +10,56 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-  await prisma.user.upsert({
-    where: {
-      username: "test",
-    },
-    update: {},
-    create: {
+  // Alte Testdaten entfernen
+  await prisma.note.deleteMany();
+  await prisma.user.deleteMany();
+
+  // User 1 mit Notes
+  const testUser = await prisma.user.create({
+    data: {
       username: "test",
       password: "test",
+
+      notes: {
+        create: [
+          {
+            title: "Erste Note",
+            content: "Meine erste Notiz",
+          },
+          {
+            title: "Todo",
+            content: "Notes API fertig bauen",
+          },
+        ],
+      },
     },
   });
 
-  await prisma.user.upsert({
-    where: {
-      username: "anna",
-    },
-    update: {},
-    create: {
+  // User 2 mit Note
+  const annaUser = await prisma.user.create({
+    data: {
       username: "anna",
       password: "test456",
+
+      notes: {
+        create: [
+          {
+            title: "Anna's Note",
+            content: "Hallo von Anna",
+          },
+        ],
+      },
     },
   });
 
-  console.log("Dummy-Daten eingefügt");
+  console.log("Seed erfolgreich");
+  console.log(testUser);
+  console.log(annaUser);
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
+  .catch((error) => {
+    console.error(error);
     process.exit(1);
   })
   .finally(async () => {
