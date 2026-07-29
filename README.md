@@ -1,6 +1,6 @@
 # 📝 Note App
 
-A sleek note-taking application that lets you quickly capture, edit, and organize your thoughts. Built with Next.js 16, React 19, and Tailwind CSS v4. The app uses a SQLite database via Prisma ORM for persistent storage of users and notes.
+A sleek note-taking application that lets you quickly capture, edit, and organize your thoughts. Built with Next.js 15 (App Router), React 19, and Tailwind CSS v4. The app uses a SQLite database via Prisma ORM for persistent storage of users and notes.
 
 ## Features
 
@@ -16,7 +16,7 @@ A sleek note-taking application that lets you quickly capture, edit, and organiz
 
 | Technology | Version | Purpose |
 |---|---|---|
-| Next.js | 16.2.11 | React framework with App Router (Server Components) |
+| Next.js | 15.x | React framework with App Router (Server Components) |
 | React | 19.2.4 | UI library for interactive components |
 | Tailwind CSS | ^4.3.3 | Utility-first CSS framework |
 | Prisma ORM | latest | Database abstraction layer |
@@ -62,6 +62,7 @@ docs/                  # Project documentation and guides
 ### Starting the Project
 
 ```bash
+npm run prisma
 npm install
 npm run tailwind:css
 npm run dev
@@ -72,6 +73,7 @@ This starts the Next.js development server on `http://localhost:3000`.
 ### Production Build
 
 ```bash
+npm run prisma
 npm run tailwind:css
 npm run build
 npm start
@@ -82,7 +84,7 @@ npm start
 The app is built with React Server Components (RSC) and Client Components. The layout (`layout.js`) and page (`page.js`) are server components, while the interactive UI elements like Header, InputArea, NotesList, and Login are client components that manage state in the browser.
 
 **State Management:**
-- **`notes`** — Array containing all notes (each with an `id`, `text`, and `timestamp`). Stored locally in the browser via React's `useState` hook
+- **`notes`** — Array containing all notes (each with an `id`, `text`). Stored locally in the browser via React's `useState` hook
 - **`noteText`** — The current text value entered in the main textarea
 - **`editText`** — The text content when editing a note
 
@@ -91,14 +93,16 @@ When the user clicks "✨ Add Note" or presses Enter, the text is validated and 
 When editing a note, edit mode is activated which hides the body overflow and reveals an inline editor. After saving or cancelling, focus returns to the main textarea.
 
 **Database:**
-Notes and user data are persisted in a SQLite database via Prisma ORM. The `users` table stores login credentials (username + password hash), while the `notes` table holds all note content linked to their respective users.
+Notes and user data are persisted in a SQLite database via Prisma ORM. The `users` table stores login credentials (username + password), while the `notes` table holds all note content linked to their respective users.
 
 ## Tailwind CSS Configuration
 
 The app uses Tailwind CSS v4 with a custom config file (`tailwind.config.ts`):
 
-```javascript
-module.exports = {
+```typescript
+import type { Config } from "tailwindcss";
+
+const config: Config = {
   content: [
     './app/**/*.{js,jsx,ts,tsx}',
     './components/**/*.{js,jsx,ts,tsx}',
@@ -107,6 +111,7 @@ module.exports = {
   theme: { extend: {} },
   plugins: [],
 }
+
 ```
 
 - **`content`** — Scan paths for Tailwind class names in JavaScript/TypeScript files
@@ -132,7 +137,7 @@ npm run lighthouse   # Generates a Lighthouse report for each test in lighthouse
 
 ## License
 
-MIT License – This app was entirely created with AI-generated code.
+MIT License – This project uses MIT license for the application source code.
 
 ---
 

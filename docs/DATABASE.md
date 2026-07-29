@@ -1,8 +1,8 @@
 # Database Schema
-
-## Prisma Models
-
-The application uses **Prisma ORM** with a SQLite backend via the `better-sqlite3` adapter for local development and testing.
+  
+ ## Prisma Models
+  
+ The application uses **Prisma ORM** with a SQLite backend via the native adapter for local development and testing only.
 
 ### User Model
 
@@ -24,16 +24,20 @@ model User {
 
 ## Current Implementation Details
 
-- **Provider**: SQLite (`sqlite`)
-- **Adapter**: `better-sqlite3` (file-based database at `./dev.db`)
-- **ORM**: Prisma Client v7.9.1
+- **Provider**: SQLite (`sqlite`) via the native adapter
+- **ORM**: Prisma Client v5.x
 - **Database file location**: Relative path from the project root, stored as `file:./dev.db`
+
+> ⚠️ The seed script (`prisma/seed.ts`) still imports `@prisma/adapter-better-sqlite3`, but this package is no longer a dependency. The connection works directly with Prisma's native SQLite adapter — the bridge package has been removed from `package.json`.
 
 ## Seed Data
 
-The seed script (`prisma/seed.ts`) is used to populate initial data into the database after setup or migration. It typically creates default admin users for development purposes.
+The seed script (`prisma/seed.ts`) creates two test users:
+- **test** / test (password)
+- **anna** / test456 (password)
+
+It uses `upsert` operations to insert or update these records. After seeding, it logs "Dummy-Daten eingefügt" and disconnects the client.
 
 ## Production Considerations
 
 - ⚠️ **Password Security**: Currently passwords are stored in plain text. For any production deployment, integrate a password hashing library (e.g., bcrypt, argon2) and update both Prisma schema and API route logic accordingly.
-- 🗄️ **Database Migration**: When switching to PostgreSQL or MySQL, update the datasource provider in `prisma/schema.prisma` and consider using environment variables for connection strings.
