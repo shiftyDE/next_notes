@@ -21,13 +21,21 @@ A sleek note-taking application that lets you quickly capture, edit, and organiz
 | Sass | ^1.69.0 | CSS preprocessor for stylesheets |
 | Cypress | ^15.19.0 | End-to-end testing framework |
 
-
 ## Project Structure
 
 ```
 app/
 ├── layout.js          # Root layout component (HTML shell, meta data)
 ├── page.js            # Main application with note functionality
+├── App.jsx            # Client-side app with login/logout logic
+├── api/               # API routes folder
+│   └── login/route.ts # Login authentication endpoint
+
+components/            # Reusable UI components
+├── Header.jsx         # Application header with navigation
+├── InputArea.jsx      # Main text input area for new notes
+├── NotesList.jsx      # List of existing notes with edit/delete actions
+└── Login.jsx          # Login form component
 
 public/                # Static assets folder
 ```
@@ -60,7 +68,7 @@ npm start
 
 The app uses React's `useState` hook to manage three states within a single client component block:
 
-1. **`notes`** — Array containing all notes, each with an `id`, `text`, `timestamp`, and optionally an `updatedAt` field
+1. **`notes`** — Array containing all notes, each with an `id`, `text`, and `timestamp`. Notes are stored locally in the browser (no backend database for note storage)
 2. **`noteText`** — The current text value entered in the main textarea
 3. **`editText`** — The text content when editing a note
 
@@ -104,14 +112,6 @@ The app includes a [Lighthouse](https://developers.google.com/web/tools/lighthou
 ```bash
 npm run lighthouse   # Generates a Lighthouse report for each test in lighthouse-report folder
 ```
-
-## Accessibility
-
-The app is designed with ARIA attributes and semantic HTML elements:
-- Skip navigation link for screen readers
-- Role attributes for Header, Main, Footer
-- Keyboard navigable via Tab key
-- Focus management when editing notes
 
 ## License
 
