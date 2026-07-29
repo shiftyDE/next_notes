@@ -2,7 +2,7 @@
 node_modules
 .next
 /app/style.css
-lighthouse
+
 /app/generated/prisma
 
 # prisma
