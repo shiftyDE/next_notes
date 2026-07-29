@@ -8,7 +8,7 @@
     "start": "next start",
     "tailwind:css": "npx @tailwindcss/cli build ./*.scss --output app/style.css",
     "cypress": "cypress open",
-    "lighthouse": "lighthouse http://localhost:3000 --output=html --output=json --output-path=./test/lighthouse-report/report",
+    "lighthouse": "lighthouse http://localhost:3000 --output=html --output=json --output-path=./tests/lighthouse-report/report",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "seed": "tsx prisma/seed.ts"
