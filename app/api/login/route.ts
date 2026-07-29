@@ -1,9 +1,15 @@
 "use server";
 
-import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 
-// In einer realen Anwendung würdet ihr hier Prisma oder ein Auth-System verwenden.
-// Da wir aktuell keine Datenbank-Anbindung haben, simulieren wir den Login.
+const adapter = new PrismaBetterSqlite3({
+  url: "file:./dev.db",
+});
+
+const prisma = new PrismaClient({
+  adapter,
+});
 
 export async function POST(req: Request) {
 
@@ -11,7 +17,7 @@ export async function POST(req: Request) {
   try {
     body = await req.json();
   } catch (error) {
-    return NextResponse.json(
+    return Response.json(
       { error: "Invalid JSON" },
       { status: 400 }
     );
@@ -21,23 +27,37 @@ export async function POST(req: Request) {
 
   // Einfache Validierung
   if (!username || !password) {
-    return NextResponse.json(
+    return Response.json(
       { error: "Username and password are required" },
       { status: 400 }
     );
   }
 
-  // In einer echten Anwendung würdet ihr hier die Benutzerdaten mit der Datenbank vergleichen.
-  // Für jetzt simulieren wir einen erfolgreichen Login.
-  
-  const user = {
-    username,
-    isAuthenticated: true,
-    role: "user"
-  };
+  try {
+    const user = await prisma.user.findUnique({
+      where: { username },
+    });
 
-  return NextResponse.json({ 
-    message: "Login erfolgreich",
-    user 
-  });
+    if (!user || user.password !== password) {
+      return Response.json(
+        { error: "Invalid credentials" },
+        { status: 401 }
+      );
+    }
+
+    const authenticatedUser = {
+      id: user.id,
+      username: user.username,
+      createdAt: user.createdAt,
+      isAuthenticated: true,
+      role: "user",
+    };
+
+    return Response.json({ 
+      message: "Login erfolgreich",
+      user: authenticatedUser 
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
 }
