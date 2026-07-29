@@ -64,7 +64,7 @@ export default function Login({ onLogin }) {
               🔐
             </span>
             <h1 className="text-4xl font-bold text-gray-100">
-              Login
+              Sign In
             </h1>
           </div>
         </div>

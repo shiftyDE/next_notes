@@ -25,10 +25,10 @@ Validates user credentials and returns an authenticated user object.
 
 - **200 OK**: Successful login. Returns the authenticated user data.
 
-  ```json
-  {
-    "message": "Login erfolgreich",
-    "user": {
+   ```json
+   {
+     "message": "Login successful",
+     "user": {
       "id": 1,
       "username": "shiftyDE",
       "createdAt": "2026-07-29T08:35:43.879Z",
@@ -58,7 +58,7 @@ Validates user credentials and returns an authenticated user object.
 
 | Field | Type | Description |
 |---|---|---|
-| `message` | string | Confirmation message in German ("Login erfolgreich") |
+| `message` | string | Confirmation message in English ("Login successful") |
 | `user.id` | number | The user's unique identifier |
 | `user.username` | string | The username of the authenticated user |
 | `user.createdAt` | ISO 8601 date string | When the account was created |
