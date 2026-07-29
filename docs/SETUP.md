@@ -30,7 +30,6 @@ This installs:
 - **react-hook-form**: Form handling utility
 - **tailwindcss**, **@tailwindcss/postcss-plugin**, **autoprefixer**: Styling system v4
 - **@prisma/client**: ORM for database interactions
-- **better-sqlite3**: SQLite adapter for Prisma
 
 ### 3. Verify Installation
 
@@ -47,7 +46,6 @@ All packages should be listed without errors.
 Start the app in development mode:
 
 ```bash
-npm run tailwind:css
 npm run dev
 ```
 
@@ -70,9 +68,6 @@ next_notes/
 │   ├── schema.prisma   # Prisma ORM model definitions
 │   └── seed.ts         # Initial data seeding script
 ├── public/             # Static assets (icons, images)
-├── test/               # Testing infrastructure
-│   ├── cypress/        # E2E tests with Cypress
-│   └── lighthouse-config.js
 ├── docs/               # Documentation files
 ├── package.json       # Dependencies and scripts
 ├── tsconfig.json      # TypeScript configuration
@@ -94,7 +89,6 @@ If you encounter errors like `Cannot find module 'next'`, ensure that:
 
 If the database file does not appear at `dev.db`:
 
-- Ensure you ran `npm run tailwind:css` successfully
 - Ensure you ran `npm run dev` successfully
 - The SQLite database is created automatically on first use
 - If using a custom path, adjust in `prisma/schema.prisma`
@@ -104,7 +98,6 @@ If the database file does not appear at `dev.db`:
 For production builds:
 
 ```bash
-npm run tailwind:css
 npm run build
 npm start
 ```

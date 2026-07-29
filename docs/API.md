@@ -35,8 +35,8 @@ Validates user credentials and returns an authenticated user object.
       "isAuthenticated": true,
       "role": "user"
     }
-  }
-  ```
+   }
+   ```
 
 - **400 Bad Request**: Invalid JSON or missing fields.
 

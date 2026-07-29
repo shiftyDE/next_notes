@@ -39,10 +39,11 @@
  "use client";
  
  export default function InputArea({ noteText, setNoteText, addNote, ref }) {
+   const textareaRef = useRef(null);
+ 
    useEffect(() => {
-     if (ref && typeof ref === 'object' && 'current' in ref) {
-       const el = ref.current;
-       if (el) el.focus();
+     if (textareaRef.current) {
+       textareaRef.current.focus();
      }
    }, []);
  
@@ -65,7 +66,7 @@
  import { useState, useRef } from 'react';
  
  export default function NotesList({ notes, setNotes, username, onLogout }) {
-   const [editId, setEditId] = useState(null);
+   const [editingId, setEditingId] = useState(null);
    const [editText, setEditText] = useState('');
    const textareaRef = useRef(null);
  

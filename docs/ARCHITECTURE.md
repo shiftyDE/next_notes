@@ -1,10 +1,10 @@
 # Architecture Documentation
  
  ## Tech Stack
- - **Framework**: Next.js 15 (App Router)
+ - **Framework**: Next.js 16 (App Router)
  - **Language**: TypeScript
  - **Styling**: Tailwind CSS v4
- - **ORM**: Prisma Client v5.x with SQLite via the native adapter for local dev/testing only
+ - **Database**: SQLite 3
  
  ## Database Setup
  Uses a simple SQLite database file (`./dev.db`) accessed directly by Prisma. No external PostgreSQL bridge is needed — the connection string `"postgresql://postgres@localhost:5432/notesdb?connection=sqlite"` is **no longer used**.
