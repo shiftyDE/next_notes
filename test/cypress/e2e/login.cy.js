@@ -42,7 +42,7 @@ describe('Login', () => {
         cy.get('button[type="submit"]').click()
 
         // Verify error message for invalid credentials
-        cy.contains("Nur Benutzer 'test' mit Passwort 'test' ist erlaubt").should('be.visible')
+        cy.contains("Invalid credentials").should('be.visible')
     })
 
     it('should not allow partial login with only username', () => {
@@ -82,7 +82,7 @@ describe('Login', () => {
         cy.get('button[type="submit"]').click()
 
         // Verify error message for invalid credentials appears
-        cy.contains("Nur Benutzer 'test' mit Passwort 'test' ist erlaubt").should('be.visible')
+        cy.contains("Invalid credentials").should('be.visible')
     })
 
     it('should display error when password is incorrect', () => {
@@ -96,7 +96,7 @@ describe('Login', () => {
         cy.get('button[type="submit"]').click()
 
         // Verify error message for invalid credentials appears
-        cy.contains("Nur Benutzer 'test' mit Passwort 'test' ist erlaubt").should('be.visible')
+        cy.contains("Invalid credentials").should('be.visible')
     })
 
 })
