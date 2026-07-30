@@ -1,14 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+
 
 export default function Login({ onLogin }) {
+
+  const router = useRouter();
+
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
 
 
   async function handleSubmit(e) {
@@ -27,8 +33,8 @@ export default function Login({ onLogin }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: username,
-          password: password,
+          username,
+          password,
         }),
       });
 
@@ -49,9 +55,19 @@ export default function Login({ onLogin }) {
       );
 
 
+      localStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
+      );
+
+
       if (onLogin) {
         onLogin(data.user);
       }
+
+
+      // Weiterleitung nach erfolgreichem Login
+      router.push("/notes");
 
 
     } catch (error) {
@@ -66,6 +82,7 @@ export default function Login({ onLogin }) {
     }
 
   }
+
 
 
   return (
@@ -91,26 +108,22 @@ export default function Login({ onLogin }) {
       />
 
 
-      {
-        error &&
+      {error && (
         <p>
           {error}
         </p>
-      }
+      )}
 
 
       <button
         type="submit"
         disabled={loading}
       >
-        {
-          loading
-            ? "Login..."
-            : "Login"
-        }
+        {loading ? "Login..." : "Login"}
       </button>
 
 
     </form>
   );
+
 }
