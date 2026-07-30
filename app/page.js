@@ -12,6 +12,7 @@ export default function Home() {
   const [editingId, setEditingId] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
+  const [user, setUser] = useState(null);
   const textareaRef = useRef(null);
 
   // Fetch notes from API on mount
@@ -24,6 +25,7 @@ export default function Home() {
 
   const handleLogin = ({ username, password }) => {
     setUsername(username);
+    setUser({ id: Date.now(), username });
     setIsAuthenticated(true);
   };
 
@@ -118,7 +120,7 @@ export default function Home() {
            <InputArea noteText={noteText} setNoteText={setNoteText} addNote={addNote} />
 
           {/* Notes List */}
-          <NotesList notes={notes} setNotes={setNotes} />
+          <NotesList notes={notes} setNotes={setNotes} user={user} username={username} />
         </>
       )}
 

@@ -14,42 +14,33 @@ async function main() {
   await prisma.note.deleteMany();
   await prisma.user.deleteMany();
 
-  // User 1 mit Notes
+  // User 1 erstellen und dann Notes mit der bekannten ID verknüpfen
   const testUser = await prisma.user.create({
     data: {
       username: "test",
       password: "test",
-
-      notes: {
-        create: [
-          {
-            title: "Erste Note",
-            content: "Meine erste Notiz",
-          },
-          {
-            title: "Todo",
-            content: "Notes API fertig bauen",
-          },
-        ],
-      },
     },
   });
 
-  // User 2 mit Note
+  await prisma.note.createMany({
+    data: [
+      { title: "Erste Note", content: "Meine erste Notiz", userId: testUser.id },
+      { title: "Todo", content: "Notes API fertig bauen", userId: testUser.id },
+    ],
+  });
+
+  // User 2 erstellen und dann Notes mit der bekannten ID verknüpfen
   const annaUser = await prisma.user.create({
     data: {
       username: "anna",
       password: "test",
-
-      notes: {
-        create: [
-          {
-            title: "Anna's Note",
-            content: "Hallo von Anna",
-          },
-        ],
-      },
     },
+  });
+
+  await prisma.note.createMany({
+    data: [
+      { title: "Anna's Note", content: "Hallo von Anna", userId: annaUser.id },
+    ],
   });
 
   console.log("Seed erfolgreich");

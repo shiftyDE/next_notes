@@ -21,7 +21,7 @@ export const metadata = {
   },
 }
 
-export default function RootLayout({ children, notes = [] }) {
+export default function RootLayout({ children, notes = [], user = null }) {
   return (
     <html lang="en" className="dark">
       <head>

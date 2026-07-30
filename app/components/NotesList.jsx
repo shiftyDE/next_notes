@@ -1,10 +1,13 @@
 "use client";
 import { useState, useRef } from 'react';
 
-export default function NotesList({ notes, setNotes, username, onLogout }) {
+export default function NotesList({ notes, user, setNotes, username, onLogout }) {
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState('');
   const textareaRef = useRef(null);
+
+  // Nur die Notizen des eingeloggten Users anzeigen; wenn kein User bekannt ist, alle Notes zeigen
+  const userNotes = user ? notes.filter(note => note.userId === user.id) : notes;
 
   const startEdit = (note) => {
     setEditingId(note.id);
@@ -56,7 +59,7 @@ export default function NotesList({ notes, setNotes, username, onLogout }) {
 
   return (
     <div className="max-w-2xl mx-auto" aria-label="Notes list">
-      {notes.map((note, index) => (
+      {userNotes.map((note, index) => (
         <article key={note.id} data-note-id={note.id} role="region" aria-label={`Note ${index + 1}`} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:outline-none outline-none">
           {editingId === note.id ? (
             <>
@@ -129,7 +132,7 @@ export default function NotesList({ notes, setNotes, username, onLogout }) {
       ))}
 
       {/* Empty State */}
-      {notes.length === 0 && (
+      {userNotes.length === 0 && (
         <div className="text-center py-12 animate-fade-in" role="status">
           <span aria-hidden="true">🌟</span>
           <p className="sr-only">Stars decorative element</p>
