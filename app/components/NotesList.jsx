@@ -8,9 +8,8 @@ export default function NotesList({ notes, setNotes, username, onLogout }) {
 
   const startEdit = (note) => {
     setEditingId(note.id);
-    setEditText(note.text);
+    setEditText(note.title || '');
     
-    // Focus the textarea in edit mode after a short delay to allow React render
     setTimeout(() => {
       document.querySelector(`[data-note-id="${note.id}"]`)?.querySelector('textarea')?.focus();
     }, 100);
@@ -19,9 +18,8 @@ export default function NotesList({ notes, setNotes, username, onLogout }) {
   const saveEdit = (e) => {
     if (editingId && editText.trim()) {
       e.preventDefault();
-      // Update the notes array with the edited text
       setNotes(notes.map(note => 
-        note.id === editingId ? { ...note, text: editText, updatedAt: new Date().toISOString() } : note
+        note.id === editingId ? { ...note, title: editText, updatedAt: new Date().toISOString() } : note
       ));
       setEditingId(null);
       setEditText('');
@@ -36,7 +34,6 @@ export default function NotesList({ notes, setNotes, username, onLogout }) {
     setEditingId(null);
     setEditText('');
     
-    // Return focus to the main textarea after edit is cancelled or saved
     setTimeout(() => {
       textareaRef.current?.focus();
     }, 100);
@@ -45,7 +42,6 @@ export default function NotesList({ notes, setNotes, username, onLogout }) {
   const handleKeyDown = (e, action) => {
     switch(e.key) {
       case 'Enter': 
-        // Add new line instead of saving on Enter press
         if(editText && editText.trim()) {
           setEditText(editText + '\n');
         } else {
@@ -96,11 +92,11 @@ export default function NotesList({ notes, setNotes, username, onLogout }) {
               </>
           ) : (
             <>
-              <p className="text-gray-300 whitespace-pre-wrap mb-2 focus:outline-none">{note.text}</p>
+              <p className="text-gray-300 whitespace-pre-wrap mb-2 focus:outline-none">{note.title}</p>
               <div className="flex items-center gap-2" role="group">
                 <span aria-hidden="true" className="text-xl">🕐</span>
-                <p className="sr-only">Created on {new Date(note.timestamp).toLocaleString('en-US')}</p>
-                <p className="mt-1 text-xs text-gray-400" aria-label={`Created on ${new Date(note.timestamp).toLocaleString('en-US')}`}>{new Date(note.timestamp).toLocaleString('en-US')}</p>
+                <p className="sr-only">Created on {new Date(note.createdAt).toLocaleString('en-US')}</p>
+                <p className="mt-1 text-xs text-gray-400" aria-label={`Created on ${new Date(note.createdAt).toLocaleString('en-US')}`}>{note.createdAt ? new Date(note.createdAt).toLocaleString('en-US') : ''}</p>
               </div>
               <div className="flex items-center gap-2" role="group">
                 <span aria-hidden="true" className="text-xl">⏱️</span>

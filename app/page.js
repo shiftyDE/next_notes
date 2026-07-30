@@ -14,12 +14,13 @@ export default function Home() {
   const [username, setUsername] = useState('');
   const textareaRef = useRef(null);
 
+  // Fetch notes from API on mount
   useEffect(() => {
-    // Set focus to textarea when page loads and no notes exist
-    if (notes.length === 0 && textareaRef.current) {
-      textareaRef.current.focus();
-    }
-  }, [notes]);
+    fetch('/api/notes')
+      .then(res => res.json())
+      .then(data => setNotes(data))
+      .catch(err => console.error('Failed to load notes:', err));
+  }, []);
 
   const handleLogin = ({ username, password }) => {
     setUsername(username);
