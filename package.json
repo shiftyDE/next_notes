@@ -10,6 +10,7 @@
     "cypress": "cypress open",
     "lighthouse": "lighthouse http://localhost:3000 --output=html --output=json --output-path=./tests/lighthouse-report/report",
     "prisma:generate": "npx prisma generate",
+    "prisma:migarte": "npx prisma migrate dev",
     "prisma:reset": "npx prisma migrate reset",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
