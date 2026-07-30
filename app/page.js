@@ -13,6 +13,16 @@ export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const [user, setUser] = useState(null);
+  
+  // Fetch user data from API after login for proper userId mapping
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetch('/api/login')
+        .then(res => res.json())
+        .then(data => setUser(data))
+        .catch(err => console.error('Failed to load user:', err));
+    }
+  }, [isAuthenticated]);
   const textareaRef = useRef(null);
 
   // Fetch notes from API on mount
@@ -23,10 +33,23 @@ export default function Home() {
       .catch(err => console.error('Failed to load notes:', err));
   }, []);
 
-  const handleLogin = ({ username, password }) => {
-    setUsername(username);
-    setUser({ id: Date.now(), username });
-    setIsAuthenticated(true);
+  const handleLogin = async ({ username, password }) => {
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username, password}),
+      });
+      const data = await res.json();
+      
+      if (data.user) {
+        setUser(data.user);
+        setUsername(username);
+        setIsAuthenticated(true);
+      }
+    } catch (err) {
+      console.error('Login failed:', err);
+    }
   };
 
   const addNote = () => {
@@ -120,7 +143,7 @@ export default function Home() {
            <InputArea noteText={noteText} setNoteText={setNoteText} addNote={addNote} />
 
           {/* Notes List */}
-          <NotesList notes={notes} setNotes={setNotes} user={user} username={username} />
+          <NotesList notes={notes} setNotes={setNotes} user={user} username={username} userId={user?.id || ''} />
         </>
       )}
 
