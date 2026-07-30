@@ -1,156 +1,207 @@
 "use client";
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
-export default function NotesList({ notes, user, setNotes, username, onLogout }) {
-  const [editingId, setEditingId] = useState(null);
-  const [editText, setEditText] = useState('');
+export default function NotesList({ notes = [], setNotes, user, username }) {
+  const [isAddingNote, setIsAddingNote] = useState(false);
   const textareaRef = useRef(null);
 
-  // Nur die Notizen des eingeloggten Users anzeigen; wenn kein User bekannt ist, alle Notes zeigen
-  const userNotes = user ? notes.filter(note => note.userId === user.id) : notes;
+  // Focus the new note textarea when adding a note starts
+  useEffect(() => {
+    if (isAddingNote) {
+      setTimeout(() => {
+        textareaRef.current?.focus();
+      }, 50);
+    }
+  }, [isAddingNote]);
 
-  const startEdit = (note) => {
-    setEditingId(note.id);
-    setEditText(note.title || '');
-    
-    setTimeout(() => {
-      document.querySelector(`[data-note-id="${note.id}"]`)?.querySelector('textarea')?.focus();
-    }, 100);
+  const handleAddNote = () => {
+    setIsAddingNote(true);
   };
 
-  const saveEdit = (e) => {
-    if (editingId && editText.trim()) {
+  const handleTextareaKeyDown = (e, note) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      setNotes(notes.map(note => 
-        note.id === editingId ? { ...note, title: editText, updatedAt: new Date().toISOString() } : note
-      ));
-      setEditingId(null);
-      setEditText('');
+      saveCurrentNote(note);
+    } else if (e.key === 'Escape') {
+      cancelEditing();
     }
   };
 
-  const deleteNote = (noteId) => {
-    setNotes(notes.filter(note => note.id !== noteId));
+  const saveCurrentNote = (note) => {
+    if (!textareaRef.current?.value?.trim()) return;
+
+    setNotes(prevNotes => {
+      // Remove the temporary empty note from the list
+      let updatedNotes = prevNotes.filter(n => n.id !== note.id);
+
+      // If we were adding a brand new note, replace it with the real content
+      if (note.id === undefined || note.id === null) {
+        const realNote = {
+          id: Date.now(),
+          title: textareaRef.current.value.trim() || 'Untitled Note',
+          content: textareaRef.current.value.trim(),
+          userId: user?.id,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+        return [realNote, ...updatedNotes];
+      }
+
+      // If editing an existing note, update it
+      if (note.id) {
+        return prevNotes.map(n =>
+          n.id === note.id ? {
+            ...n,
+            title: textareaRef.current.value.trim() || 'Untitled Note',
+            content: textareaRef.current.value.trim(),
+            updatedAt: new Date().toISOString(),
+          } : n
+        );
+      }
+
+      return prevNotes;
+    });
+
+    setIsAddingNote(false);
   };
 
-  const cancelEdit = () => {
-    setEditingId(null);
-    setEditText('');
-    
-    setTimeout(() => {
-      textareaRef.current?.focus();
-    }, 100);
-  };
-
-  const handleKeyDown = (e, action) => {
-    switch(e.key) {
-      case 'Enter': 
-        if(editText && editText.trim()) {
-          setEditText(editText + '\n');
-        } else {
-          e.preventDefault();
-          saveEdit();
-        }
-        break;
-      case 'Escape': cancelEdit(); break;
-      default: break;
+  const cancelEditing = () => {
+    if (textareaRef.current) {
+      textareaRef.current.value = '';
     }
+    setIsAddingNote(false);
   };
+
+  // Build the notes list from the database data
+  const displayNotes = notes.map(note => ({
+    id: note.id,
+    title: note.title || 'Untitled Note',
+    content: note.content,
+    createdAt: new Date(note.createdAt).toLocaleString('de-DE'),
+    updatedAt: new Date(note.updatedAt).toLocaleString('de-DE'),
+  }));
+
+  // Add a temporary empty note for the textarea (will be replaced when Enter is pressed)
+  const tempNote = { id: undefined, title: '', content: '' };
 
   return (
-    <div className="max-w-2xl mx-auto" aria-label="Notes list">
-      {userNotes.map((note, index) => (
-        <article key={note.id} data-note-id={note.id} role="region" aria-label={`Note ${index + 1}`} className="mb-4 p-5 bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group animate-fade-in focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:outline-none outline-none">
-          {editingId === note.id ? (
-            <>
-              <label htmlFor={`edit-note-${note.id}`} className="sr-only">Edit note</label>
-                <textarea
-                  id={`edit-note-${note.id}`}
-                  value={editText}
-                  onChange={(e) => setEditText(e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(e, 'save')}
-                  aria-label="Edit note"
-                  ref={(el) => { if (el && editingId === note.id) textareaRef.current = el; }}
-                  className="w-full p-2 mb-3 bg-gray-900 border border-gray-600 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors duration-200 resize-y h-24 focus-visible:ring-2 focus-visible:ring-purple-500"
-                />
-                <div className="flex justify-end gap-3">
-                  <button
-                    onClick={cancelEdit}
-                    aria-label="Cancel editing"
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); cancelEdit(); } }}
-                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-purple-500 active:scale-[0.98] opacity-100"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={saveEdit}
-                    aria-label="Save note"
-                    onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
-                    className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg focus-visible:ring-2 focus-visible:ring-green-500 active:scale-[0.98] disabled:opacity-50 opacity-100"
-                  >
-                    <span aria-hidden="true">💾</span>
-                    Save
-                  </button>
-                </div>
-              </>
-          ) : (
-            <>
-              <p className="text-gray-300 whitespace-pre-wrap mb-2 focus:outline-none">{note.title}</p>
-              <div className="flex items-center gap-2" role="group">
-                <span aria-hidden="true" className="text-xl">🕐</span>
-                <p className="sr-only">Created on {new Date(note.createdAt).toLocaleString('en-US')}</p>
-                <p className="mt-1 text-xs text-gray-400" aria-label={`Created on ${new Date(note.createdAt).toLocaleString('en-US')}`}>{note.createdAt ? new Date(note.createdAt).toLocaleString('en-US') : ''}</p>
-              </div>
-              <div className="flex items-center gap-2" role="group">
-                <span aria-hidden="true" className="text-xl">⏱️</span>
-                <p className="sr-only">{note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}</p>
-                <p className="text-xs text-teal-400 mt-0.5" aria-label={note.updatedAt ? `Modified on ${new Date(note.updatedAt).toLocaleString('en-US')}` : 'Not yet edited'}>{note.updatedAt ? new Date(note.updatedAt).toLocaleString('en-US') : 'Not edited'}</p>
-              </div>
-              <div className="flex justify-end gap-2" role="group">
-                <button
-                  onClick={() => startEdit(note)}
-                  aria-label="Edit note"
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startEdit(note); } }}
-                  className="px-4 py-2 bg-blue-600/80 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.98] opacity-100"
-                >
-                  <span aria-hidden="true">✏️</span>
-                  Edit
-                </button>
-                <button
-                  onClick={() => deleteNote(note.id)}
-                  aria-label="Delete note"
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); deleteNote(note.id); } }}
-                  className="px-4 py-2 bg-red-600/80 hover:bg-red-700 text-white rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-red-500 active:scale-[0.98] opacity-100"
-                >
-                  <span aria-hidden="true">🗑️</span>
-                  Delete
-                </button>
-              </div>
-            </>
-          )}
-        </article>
-      ))}
+    <div className="max-w-4xl mx-auto" role="list">
+      {/* Notes List Header */}
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-lg font-semibold text-gray-300 flex items-center gap-2">
+          <span aria-hidden="true">&#9670;</span>
+          Meine Notizen
+        </h2>
+        {isAddingNote && (
+          <button
+            onClick={cancelEditing}
+            aria-label="Cancel editing"
+            className="text-sm px-3 py-1 bg-gray-800 hover:bg-gray-700 text-gray-400 rounded-lg transition-all duration-200 shadow focus-visible:ring-2 focus-visible:ring-purple-500 active:scale-[0.95]"
+          >
+            Abbrechen
+          </button>
+        )}
+      </div>
 
-      {/* Empty State */}
-      {userNotes.length === 0 && (
-        <div className="text-center py-12 animate-fade-in" role="status">
-          <span aria-hidden="true">🌟</span>
-          <p className="sr-only">Stars decorative element</p>
-          <p className="text-gray-400 text-lg mb-3">Your notes will appear here</p>
-          <p className="text-gray-400 text-sm">Start typing above to create your first note!</p>
-        </div>
+      {/* Notes List */}
+      {displayNotes.length === 0 ? (
+        <p className="text-gray-500 text-sm py-8 text-center">Noch keine Notizen vorhanden.</p>
+      ) : (
+        displayNotes.map((note) => (
+          <div
+            key={note.id}
+            data-note-id={note.id}
+            role="listitem"
+            className="mb-4 animate-fade-in-up"
+          >
+            {/* Note Card */}
+            <div className="bg-gray-800/50 border border-gray-700/30 rounded-xl p-4 shadow-lg focus-trap-notes">
+              <textarea
+                ref={isAddingNote ? textareaRef : null}
+                onKeyDown={(e) => handleTextareaKeyDown(e, note)}
+                placeholder="Schreibe hier deine Notiz..."
+                aria-label={`Notiz ${note.id}`}
+                className="w-full bg-transparent border-none outline-none resize-y min-h-[80px] text-gray-200 placeholder-gray-500 h-auto p-1"
+                defaultValue={note.content}
+              />
+
+              {/* Note Footer */}
+              <div className="flex items-center justify-between mt-3 pt-2 border-t border-gray-700/30">
+                {/* Timestamps and Actions */}
+                <span className="text-xs text-gray-500 flex items-center gap-1.5">
+                  <span aria-hidden="true">&#8984;</span>
+                  {note.updatedAt}
+                </span>
+
+                {/* Delete Button */}
+                <button
+                  onClick={() => setNotes(prevNotes => prevNotes.filter(n => n.id !== note.id))}
+                  aria-label={`Delete note ${note.id}`}
+                  className="opacity-0 group-hover:opacity-100 transition-all duration-300 focus:opacity-100 text-gray-400 hover:text-red-400 rounded-lg px-2 py-0.5 focus-visible:ring-2 focus-visible:ring-red-500 active:scale-[0.95]"
+                >
+                  <span aria-hidden="true">&#x2718;</span>
+                </button>
+
+                {/* Edit Button */}
+                <button
+                  onClick={() => {
+                    setNotes(prevNotes =>
+                      prevNotes.map(n =>
+                        n.id === note.id ? { ...n, isEditing: true } : n
+                      )
+                    );
+                  }}
+                  aria-label={`Edit note ${note.id}`}
+                  className="opacity-0 group-hover:opacity-100 transition-all duration-300 focus:opacity-100 text-gray-400 hover:text-blue-400 rounded-lg px-2 py-0.5 focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.95]"
+                >
+                  <span aria-hidden="true">&#9998;</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Add new note button */}
+            {isAddingNote && (
+              <div className="mt-3 flex items-center justify-between">
+                <span className="text-xs text-gray-500">Neue Notiz eingeben...</span>
+                <button
+                  onClick={handleAddNote}
+                  aria-label="Cancel adding note"
+                  className="text-sm px-2 py-1 bg-gray-800 hover:bg-gray-700 text-gray-400 rounded-lg transition-all duration-200 shadow focus-visible:ring-2 focus-visible:ring-purple-500 active:scale-[0.95]"
+                >
+                  Abbrechen
+                </button>
+              </div>
+            )}
+
+            {/* Add new note textarea */}
+            {isAddingNote && (
+              <textarea
+                ref={textareaRef}
+                onKeyDown={(e) => handleTextareaKeyDown(e, null)}
+                placeholder="Schreibe hier deine neue Notiz..."
+                aria-label="Neue Notiz"
+                className="w-full bg-gray-800/50 border border-gray-700/30 rounded-xl p-4 shadow-lg focus-trap-notes mt-2"
+              />
+            )}
+          </div>
+        ))
       )}
 
-      {/* Logout Button */}
-      {username && (
+      {/* Add new note button */}
+      {!isAddingNote && (
         <button
-          onClick={onLogout}
-          aria-label="Logout"
-          className="mt-6 w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white rounded-xl transition-all duration-200 shadow-lg focus-visible:ring-2 focus-visible:ring-red-500 active:scale-[0.98]"
+          onClick={handleAddNote}
+          aria-label="Add new note"
+          className="mt-4 px-6 py-2 bg-gradient-to-r from-teal-800 to-blue-900 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg focus-visible:ring-2 focus-visible:ring-purple-500 active:scale-[0.98] hover:from-teal-700 hover:to-blue-800"
         >
-          <span aria-hidden="true">🚪</span> Logout
+          + Neue Notiz hinzufügen
         </button>
       )}
+
+      {/* Focus trap helper */}
+      <div className="hidden" aria-hidden="true">
+        {isAddingNote ? (textareaRef.current) : null}
+      </div>
     </div>
   );
 }
