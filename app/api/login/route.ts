@@ -1,61 +1,118 @@
-import { PrismaClient } from "@prisma/client";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import jwt from "jsonwebtoken";
 
-const adapter = new PrismaBetterSqlite3({
-  url: "file:./dev.db",
-});
-
-const prisma = new PrismaClient({
-  adapter,
-});
 
 export async function POST(req: Request) {
 
-  let body: any;
   try {
-    body = await req.json();
-  } catch (error) {
-    return Response.json(
-      { error: "Invalid JSON" },
-      { status: 400 }
-    );
-  }
 
-  const { username, password } = body;
+    const body = await req.json();
 
-  // Einfache Validierung
-  if (!username || !password) {
-    return Response.json(
-      { error: "Username and password are required" },
-      { status: 400 }
-    );
-  }
+    console.log("LOGIN BODY:", body);
 
-  try {
-    const user = await prisma.user.findUnique({
-      where: { username },
-    });
 
-    if (!user || user.password !== password) {
-      return Response.json(
-        { error: "Invalid credentials" },
-        { status: 401 }
+    const {
+      username,
+      password,
+    } = body;
+
+
+    if (!username || !password) {
+
+      return NextResponse.json(
+        {
+          error: "Username und Passwort erforderlich",
+        },
+        {
+          status: 400,
+        }
       );
+
     }
 
-    const authenticatedUser = {
-      id: user.id,
-      username: user.username,
-      createdAt: user.createdAt,
-      isAuthenticated: true,
-      role: "user",
-    };
 
-    return Response.json({ 
-      message: "Login successful",
-      user: authenticatedUser 
+    const user = await prisma.user.findUnique({
+
+      where: {
+        username,
+      },
+
     });
-  } finally {
-    await prisma.$disconnect();
+
+
+    if (!user) {
+
+      return NextResponse.json(
+        {
+          error: "Login fehlgeschlagen",
+        },
+        {
+          status: 401,
+        }
+      );
+
+    }
+
+
+    if (user.password !== password) {
+
+      return NextResponse.json(
+        {
+          error: "Login fehlgeschlagen",
+        },
+        {
+          status: 401,
+        }
+      );
+
+    }
+
+
+    const token = jwt.sign(
+
+      {
+        id: user.id,
+        username: user.username,
+      },
+
+      process.env.JWT_SECRET!,
+
+      {
+        expiresIn: "7d",
+      }
+
+    );
+
+
+    return NextResponse.json({
+
+      success: true,
+
+      user: {
+        id: user.id,
+        username: user.username,
+      },
+
+      token,
+
+    });
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    return NextResponse.json(
+      {
+        error: "Server Fehler",
+      },
+      {
+        status: 500,
+      }
+    );
+
   }
+
 }
